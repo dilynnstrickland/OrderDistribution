@@ -1,0 +1,24 @@
+{
+    "name": "order-distribution",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start-dev": "nodemon index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DilynnStrickland/OrderDistribution"
+    },
+    "author": "Dilynn Strickland & Cameron Cobb & Braden Jackson",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/DilynnStrickland/OrderDistribution/issues"
+    },
+    "homepage": "https://github.com/DilynnStrickland/OrderDistribution#instructions",
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "nodemon": "^2.0.20"
+    }
+}
