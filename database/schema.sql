@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS Item (
     itemID TEXT PRIMARY KEY,
     itemName TEXT UNIQUE NOT NULL,
     itemBrand TEXT NOT NULL,
+    catagory TEXT, -- Catagory of Item
     quantity INTEGER DEFAULT 0
 );
 
@@ -55,4 +56,4 @@ CREATE TABLE IF NOT EXISTS OrderLists (
     item TEXT,
     quantity INTEGER DEFAULT 0,
     FOREIGN KEY (item) REFERENCES Item(itemID)
-)
+);
