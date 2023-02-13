@@ -1,37 +1,42 @@
 "use strict";
 
 const db = require("./db");
-const crypto = require("crypto");
-const argon2 = require("argon2");
+const crypto = require('crypto');
+const argon2 = require('argon2');
 
-async function createUser(email, username, firstname, lastname, password) {
-    let created; 
-    const uuid = crypto.randomUUID();
-    const PasswordHash = await argon2.hash(password);
-
-    const sql = `
-        INSERT INTO Users
-        values (@userID, @username, @passowrdHash, @email, @firstname, @lastname)
-    `;
-
-    const stmt = db.prepare(sql);
-
-    try {
-        stmt.run({
-            userID: uuid,
-            username: username,
-            passwordHash: PasswordHash,
-            email: email,
-            firstname: firstname,
-            lastname: lastname,
+async function addUser(username, password, role, location) {
+    try{
+        const userId = crypto.randomUUID();
+        const hash = await argon2.hash(password);
+        const sqlUsersTable = `INSERT INTO Users(userid, username, passwordhash, role, location) VALUES (@userid, @username, @passwordhash, @role, @location)`;
+        const stmtUsersTable = db.prepare(sqlUsersTable);
+        stmtUsersTable.run({
+            "userid":userId,
+            "username":username,
+            "passwordhash":hash,
+            "role":role,
+            "location":location
         });
-        created = true;
-    } catch(err) { // catch if user exists
+        return true;
+    } catch(err) {
         console.error(err);
-        created = false;
+        return false;
     }
-
-    return created;
 }
 
-exports.createUser = createuser;
+function getUserByUsername(username) {
+    const sql = `SELECT * FROM Users WHERE username=@username`;
+    try {
+        const stmt = db.prepare(sql);
+        const user = stmt.get({"username":username});
+        return user;  
+    } catch(err) {
+        console.error(err);
+    }
+    
+}
+
+module.exports = {
+    addUser,
+    getUserByUsername,
+};
