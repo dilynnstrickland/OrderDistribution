@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS Users (
+    userid TEXT UNIQUE PRIMARY KEY,
+    username TEXT UNIQUE NOT NULL,
+    passwordhash TEXT UNIQUE NOT NULL,
+    role INTEGER NOT NULL,
+    location TEXT REFERENCES Locations(name)
+);
+
+CREATE TABLE IF NOT EXISTS Locations (
+    name TEXT UNIQUE PRIMARY KEY
+)
