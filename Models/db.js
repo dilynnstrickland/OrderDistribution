@@ -1,7 +1,7 @@
 "use strict";
 
 const Database = require('better-sqlite3');
-const db = new Database(`./database/${process.env.DB}`);
+const db = new Database(`./Database/${process.env.DB}`);
 
 // Signal handlers - closes database
 process.on('exit', () => db.close());
