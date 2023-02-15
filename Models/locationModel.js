@@ -3,7 +3,7 @@
 const db = require("./db");
 
 function getLocations() {
-    const sql = `SELECT name FROM Locations`;
+    const sql = `SELECT name FROM Location`;
     try {
         const stmt = db.prepare(sql);
         const names = stmt.all({});
