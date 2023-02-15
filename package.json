@@ -2,10 +2,10 @@
     "name": "order-distribution",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "app.js",
     "scripts": {
         "start-dev": "npm run init-db && nodemon app.js",
-        "init-db": "node ./database/init-db.js",
+        "init-db": "node ./Database/init-db.js",
         "populate-db": "sqlite3 ./database/OrderDistribution.db <./database/mock-pop.sql"
     },
     "repository": {
