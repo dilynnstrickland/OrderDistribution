@@ -4,7 +4,8 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "start-dev": "npm run init-db && nodemon app.js",
+        "build": "npx tailwindcss build -i public/input.css -o public/output.css",
+        "start-dev": "npm run init-db && npm run build && nodemon app.js",
         "init-db": "node ./Database/init-db.js",
         "populate-db": "sqlite3 ./database/OrderDistribution.db <./database/mock-pop.sql"
     },
@@ -18,6 +19,12 @@
         "url": "https://github.com/DilynnStrickland/OrderDistribution/issues"
     },
     "homepage": "https://github.com/DilynnStrickland/OrderDistribution#instructions",
+    "devDependencies": {
+        "autoprefixer": "^10.4.4",
+        "postcss": "^8.4.12",
+        "tailwindcss": "^3.0.23",
+        "vite": "^2.9.1"
+    },
     "dependencies": {
         "argon2": "^0.30.3",
         "better-sqlite3": "^8.1.0",

@@ -1,3 +1,5 @@
+"use strict";
+
 const form = document.getElementById("loginForm");
 async function getNextPage(event){
 event.preventDefault();
