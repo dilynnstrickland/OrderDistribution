@@ -6,7 +6,7 @@
     "scripts": {
         "start-dev": "npm run init-db && nodemon app.js",
         "init-db": "node ./Database/init-db.js",
-        "populate-db": "sqlite3 ./database/OrderDistribution.db <./database/mock-pop.sql"
+        "populate-db": "sqlite3 ./Database/OrderDistribution.db <./Database/mock-pop.sql"
     },
     "repository": {
         "type": "git",
