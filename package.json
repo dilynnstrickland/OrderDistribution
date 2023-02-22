@@ -38,44 +38,4 @@
         "nodemon": "^2.0.20",
         "redis": "^3.1.2"
     }
-  "name": "order-distribution",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-      "build": "npx tailwindcss build -i public/input.css -o public/output.css",
-      "start-dev": "npm run init-db && npm run build && nodemon app.js",
-      "init-db": "node ./Database/init-db.js",
-      "populate-db": "sqlite3 ./Database/OrderDistribution.db <./Database/mock-pop.sql"
-  },
-  "repository": {
-      "type": "git",
-      "url": "git+https://github.com/DilynnStrickland/OrderDistribution"
-  },
-  "author": "Dilynn Strickland & Cameron Cobb & Braden Jackson & Yuji ",
-  "license": "ISC",
-  "bugs": {
-      "url": "https://github.com/DilynnStrickland/OrderDistribution/issues"
-  },
-  "homepage": "https://github.com/DilynnStrickland/OrderDistribution#instructions",
-  "devDependencies": {
-      "autoprefixer": "^10.4.4",
-      "postcss": "^8.4.12",
-      "tailwindcss": "^3.0.23",
-      "vite": "^2.9.1"
-  },
-  "dependencies": {
-      "argon2": "^0.30.3",
-      "better-sqlite3": "^8.1.0",
-      "connect-redis": "^6.1.3",
-      "crypto": "^1.0.1",
-      "dotenv": "^16.0.3",
-      "ejs": "^3.1.8",
-      "express": "^4.18.2",
-      "express-session": "^1.17.3",
-      "helmet": "^6.0.1",
-      "joi": "^17.7.1",
-      "nodemon": "^2.0.20",
-      "redis": "^3.1.2"
-  }
 }
