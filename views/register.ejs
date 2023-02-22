@@ -20,16 +20,39 @@
         
             <label for="passwordConfirm">Confirm Password:</label>
             <input type="password" id="passwordConfirm" name="passwordConfirm" required><br><br>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="example@gmail.com"required><br><br>
 
-            <label for="location">Location:</label>
-            <select name="location" id="location" required>
-                    <option value="">--Please Select Location--</option>
-                <% for (let i = 0; i < locations.length; i++) { %>
-                    <option value="<%=locations[i].name%>"><%=locations[i].name%></option>
-                <% } %> 
-            </select><br><br>
+            <label for="firstName">First Name:</label>
+            <input type="firstName" id="firstName" name="firstName" required><br><br>
 
-            <fieldset>
+            <label for="lastName">Last Name:</label>
+            <input type="lastName" id="lastName" name="lastName" required><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+        <br><br>
+        <div class="login">
+            <span>Already have an account?</span>
+            <label for='login'>Login:</label> 
+            <a href="/login">here</a>
+        </div>
+    </div>
+    
+    
+
+</body>
+</html>
+<!--<label for="locaiton">Location:</label>-->
+<!-- <select name="location" id="location" required>
+    <option value="">--Please Select Location--</option>
+<% for (let i = 0; i < locations.length; i++) { %>
+    <option value="<%=locations[i].name%>"><%=locations[i].name%></option>
+<% } %> 
+</select><br><br> -->
+
+<!-- <fieldset>
                 <legend>Role:</legend>
                 <div>
                     <input type="radio" id="locationManager" name="role" value=1 checked>
@@ -48,19 +71,4 @@
                     <label for="admin">Admin</label>
                 </div>
             </fieldset>
-            <br><br>
-
-            <button type="submit">Submit</button>
-        </form>
-        <br><br>
-        <div class="login">
-            <span>Already have an account?</span>
-            <label for='login'>Login:</label> 
-            <a href="/login">here</a>
-        </div>
-    </div>
-    
-    
-
-</body>
-</html>
+            <br><br> -->
