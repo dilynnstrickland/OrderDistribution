@@ -5,10 +5,10 @@ const express = require("express");
 const app = express();
 const redis = require('redis');
 const session = require('express-session');
+let RedisStore = require('connect-redis')(session);
 const isProduction = process.env.NODE_ENV === "production";
 
 /*Register Session Management*/
-let RedisStore = require('connect-redis')(session);
 let redisClient = redis.createClient();
 const sessionConfig = {
     store: new RedisStore({ client: redisClient }),
