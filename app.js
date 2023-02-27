@@ -5,10 +5,10 @@ const express = require("express");
 const app = express();
 const redis = require('redis');
 const session = require('express-session');
+let RedisStore = require('connect-redis')(session);
 const isProduction = process.env.NODE_ENV === "production";
 
 /*Register Session Management*/
-let RedisStore = require('connect-redis')(session);
 let redisClient = redis.createClient();
 const sessionConfig = {
     store: new RedisStore({ client: redisClient }),
@@ -47,6 +47,7 @@ app.get("/register", (req, res) => {
 
 
 app.post("/api/login", userValidator.loginValidator, userController.login);
+
 app.post("/api/register", userValidator.registerValidator, userController.createNewUser);
 if(isProduction) {
   app.set('trust proxy',1);
@@ -56,13 +57,13 @@ if(isProduction) {
 
 app.listen(process.env.PORT, () => {
   const BLUE = "\u001b[34;1m";
-const GREEN = "\u001b[32;1m";
-const RESET = "\u001b[0m";
+  const GREEN = "\u001b[32;1m";
+  const RESET = "\u001b[0m";
 
   let mode = process.env.NODE_ENV || "development";
-// Then add some color
-const color = isProduction ? GREEN : BLUE;
-mode = `${color}${mode}${RESET}`;
+  // Then add some color
+  const color = isProduction ? GREEN : BLUE;
+  mode = `${color}${mode}${RESET}`;
 
   console.log(`Listening on port: ${process.env.PORT} in ${mode} mode`);
 });     

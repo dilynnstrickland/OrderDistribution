@@ -24,11 +24,14 @@ const registerSchema = Joi.object({
         .valid(Joi.ref('password'))
         .required(),
 
-    location:Joi.string()
-        .required(),
+    email:Joi.string()
+        .email({ tlds: { allow: false } }),
 
-    role:Joi.number()
-            .required(),
+    firstName:Joi.string()
+        .required(),
+        
+    lastName:Joi.string()
+        .required(),
     
 });
 
