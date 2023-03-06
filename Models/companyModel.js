@@ -1,33 +1,39 @@
 "use strict";
 
 const db = require("./db");
+const crypto = require('crypto');
 
-function addCompany(name, address) {
-    const sql = `INSERT into Company(name, address) VALUES (@name, @address)`;
-    try {
-        const stmt = db.prepare(sql);
-        stmt.run({
-            "name": name,
-            "address": address
+async function addCompany(companyName, companyAddr) {
+    try{
+        const companyID = crypto.randomUUID();
+        const sqlCompanyTable = `INSERT INTO Company(companyID, name, address) VALUES (@companyID, @name, @address)`;
+        const stmtCompanyTable = db.prepare(sqlCompanyTable);
+        stmtCompanyTable.run({
+            "companyID":companyID, 
+            "name":companyName, 
+            "address":companyAddr
         });
-        return true;
-    } catch (err) {
+        return companyID;
+    } catch(err) {
         console.error(err);
+        return false;
     }
 }
 
-function getCompanies() {
-    const sql = 'SELECT name FROM Company';
+function getCompanyByCompanyID(companyId) {
+    console.log(companyId);
+    const sql = `SELECT * FROM Company WHERE companyID=@companyID`;
     try {
         const stmt = db.prepare(sql);
-        const companies = stmt.get();
-        return companies;
-    } catch (err) {
+        const company = stmt.get({"companyID":companyId});
+        return company;  
+    } catch(err) {
         console.error(err);
-    }
+    }   
 }
+
 
 module.exports = {
     addCompany,
-    getCompanies,
+    getCompanyByCompanyID
 };

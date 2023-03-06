@@ -32,7 +32,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.set("view engine", "ejs");
 const userController = require('./Controllers/userControllers');
-const locationController = require('./Controllers/locationControllers')
+const locationController = require('./Controllers/locationControllers');
+const companyModel = require('./Models/companyModel');
 const userValidator = require('./Validators/userValidators');
 
 //Router to dashboard Controller
@@ -66,22 +67,43 @@ app.use( express.static( "public" ) );
 app.get("/login", (req, res) => {
   res.render("login", {session: req.session});
 });
-
 // Register
-app.get("/register", (req, res) => {
-  const locations = locationController.allLocations();
-  console.log(locations);
-  res.render("register", {locations:locations});
+app.get("/registerOwner", (req, res) => {
+  res.render("registerOwner");
 });
+app.get("/dashboard", (req, res) => {
+  const role = req.session.user.role;
+  const company = companyModel.getCompanyByCompanyID(req.session.user.company);
+  res.render("dashboard", {role:role, companyDict:company});
+})
+app.get("/inventory", (req, res) => {
+  res.render("inventory");
+})
+app.get("/location", (req, res) => {
+  res.render("location");
+})
+app.get("/warehouse", (req, res) => {
+  res.render("warehouse");
+})
+app.get("/order", (req, res) => {
+  res.render("order");
+})
+app.get("/account", (req, res) => {
+  res.render("account");
+})
+app.get("/company", (req, res) => {
+  res.render("company");
+})
 
 // Allow someone to go to host.domain/ instead of host.domain/index
 app.get("/404", (req, res) => {
   res.render("notfound", {session: req.session});
 });
+app.get("/logout", userController.logOut);
 
 // Login & Register call functions in the userControllers.js file. // This really confused Cameron.
 app.post("/api/login", userValidator.loginValidator, userController.login);
-app.post("/api/register", userValidator.registerValidator, userController.createNewUser);
+app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
 
 
 if(isProduction) {
@@ -89,7 +111,6 @@ if(isProduction) {
   app.use(helmet());
   app.use(productionErrorHandler);
 }
-
 // Port Listening (Now With Color!)
 app.listen(process.env.PORT, () => {
   const BLUE = "\u001b[34;1m";

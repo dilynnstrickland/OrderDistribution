@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS Users (
 
 CREATE TABLE IF NOT EXISTS Company (
     companyID TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    address TEXT NOT NULL
+    name TEXT UNIQUE NOT NULL,
+    address TEXT UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Location ( -- Refers

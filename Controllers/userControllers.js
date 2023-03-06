@@ -1,15 +1,33 @@
 "use strict";
 const userModel = require("../Models/userModel");
+const companyModel = require("../Models/companyModel");
 const argon2 = require('argon2');
+
+async function createNewOwner(req, res) {
+    const {username, password, email, firstName, lastName, companyName, companyAddr} = req.body;
+    const newCompany = await companyModel.addCompany(companyName, companyAddr);
+    const newUser = await userModel.addOwner(username, password, email, firstName, lastName, newCompany);
+
+    if(!newCompany){
+        return res.sendStatus(409);//Conflict
+    }
+    if(!newUser){
+        return res.sendStatus(409);//Conflict
+    }
+    
+    return res.redirect("/login");
+}
 
 async function createNewUser(req, res) {
     const {username, password, email, firstName, lastName} = req.body;
-    const create = await userModel.addUser(username, password, email, firstName, lastName);
-    if(create){
-        return res.redirect("/login");
-    } else {
+    const newUser = await userModel.addUser(username, password, email, firstName, lastName);
+    if(!newCompany){
         return res.sendStatus(409);//Conflict
     }
+    if(!newUser){
+        return res.sendStatus(409);//Conflict
+    }
+    return res.redirect("/dashboard");
 }
 
 async function login(req, res) {
@@ -26,13 +44,13 @@ async function login(req, res) {
     }
     
     const user = userModel.getUserByUsername(username);
+
     if(!user) {
         console.log("User does not exist");
         return res.sendStatus(400);
     } 
     console.log("User exists.");
     const {passwordHash} = user;
-    console.log(passwordHash)
     if(await argon2.verify(passwordHash,password)) {
         req.session.regenerate((err) => {
             if(err) {
@@ -45,10 +63,18 @@ async function login(req, res) {
             req.session.user.email = user.email;
             req.session.user.firstName = user.firstName;
             req.session.user.lastName = user.lastName;
+            if(user.company){
+                req.session.user.company = user.company;
+            } else {
+                return res.sendStatus(400);
+            }
             req.session.isLoggedIn = true;
             console.log("Login Successful. Redirecting to Dashboard.")
-            res.redirect('/dashboard');
-            //return res.sendStatus(200);//OK // This may not actually transmit because of redirect
+            if( 0 <= user.role < 5) {
+                res.redirect('/dashboard');
+            //req.session.user.role = user.role;
+            }
+            res.redirect("/dashboard");//OK // This may not actually transmit because of redirect
         });
     } else {
         return res.sendStatus(400);//Bad Request
@@ -85,6 +111,7 @@ function logOut(req, res) {
 
 module.exports = {
     createNewUser,
+    createNewOwner,
     login,
     logOut,
     // editUser,

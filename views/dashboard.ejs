@@ -464,3 +464,111 @@
 </body>
 
 </html>
+<!doctype html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <div class="logo">
+        <img src="???">
+    </div>
+    <div class="logout">
+        <form action="/logout" method="GET">
+            <button type="submit">Log Out</button>
+        </form>
+    </div>
+</head>
+<body>
+    <div class="title">
+        <h1>Dashboard</h1>
+        <% if(companyDict.name) { %>
+            <div class="companyCard">
+                <h2><%= companyDict.name %></h2>
+                <h3><%= companyDict.address %></h3>
+            </div>
+        <% } %>
+    </div>
+    <% if (role == 4) { %>
+        <div class="inventoryCard">
+            <h3><a href="/inventory">Inventory</a></h3>
+        </div>
+        <div class="locationCard">
+            <h3><a href="/location">Location</a></h3>
+        </div>
+        <div class="warehouseCard">
+            <h3><a href="/warehouse">Warehouse</a></h3>
+        </div>
+        <div class="orderCard">
+            <h3><a href="/order">Order</a></h3>
+        </div>
+        <div class="accountCard">
+            <h3><a href="/account">Account</a></h3>
+        </div>
+        <div class="companyRegisterCard">
+            <h3><a href="/company">Register Company</a></h3>
+        </div>
+    <% } %>
+    <% if (role == 3) { %>
+        <div class="inventoryCard">
+            <h3><a href="/inventory">Inventory</a></h3>
+        </div>
+        <div class="locationCard">
+            <h3><a href="/location">Location</a></h3>
+        </div>
+        <div class="warehouseCard">
+            <h3><a href="/warehouse">Warehouse</a></h3>
+        </div>
+        <div class="orderCard">
+            <h3><a href="/order">Order Status</a></h3>
+        </div>
+        <div class="employeeCard">
+            <h3><a href="/">Add Employee</a></h3>
+        </div>
+        <div class="accountCard">
+            <h3><a href="/">Account</a></h3>
+        </div>
+    <% } %>
+    <% if (role == 2) { %>
+        <div class="inventoryCard">
+            <h3><a href="/inventory">Inventory</a></h3>
+        </div>
+        <div class="locationCard">
+            <h3><a href="/location">Location</a></h3>
+        </div>
+        <div class="warehouseCard">
+            <h3><a href="/warehouse">Warehouse</a></h3>
+        </div>
+        <div class="orderCard">
+            <h3><a href="/order">Order</a></h3>
+        </div>
+        <div class="accountCard">
+            <h3><a href="/">Account</a></h3>
+        </div>
+    <% } %>
+    <% if (role == 1) { %>
+        <div class="inventoryCard">
+            <h3><a href="/inventory">Inventory</a></h3>
+        </div>
+        <div class="locationCard">
+            <h3><a href="/location">Location</a></h3>
+        </div>
+        <div class="warehouseCard">
+            <h3><a href="/warehouse">Warehouse</a></h3>
+        </div>
+        <div class="orderCard">
+            <h3><a href="/order">Order</a></h3>
+        </div>
+        <div class="accountCard">
+            <h3><a href="/">Account</a></h3>
+        </div>
+    <% } %>
+    <% if (role == 0) { %>
+        <div class="informMessage">
+            <h2>Contact Your Owner</h2>
+        </div>
+    <% } %>
+    
+
+
+
+</body>
+</html>

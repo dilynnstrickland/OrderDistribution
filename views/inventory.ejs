@@ -787,3 +787,10 @@
 </body>
 
 </html>
+<label for="locaiton">Location:</label>-->
+<select name="location" id="location" required>
+    <option value="">--Please Select Location--</option>
+    <% for (let i = 0; i < locations.length; i++) { %>
+    <option value="<%=locations[i].name%>"><%=locations[i].name%></option>
+<% } %>  
+</select><br><br>
