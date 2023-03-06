@@ -32,28 +32,51 @@ app.use(express.urlencoded({ extended: false }));
 
 app.set("view engine", "ejs");
 const userController = require('./Controllers/userControllers');
-const locationController = require('./Controllers/locationControllers')
+const locationController = require('./Controllers/locationControllers');
+const companyModel = require('./Models/companyModel');
 const userValidator = require('./Validators/userValidators');
 
 app.get("/login", (req, res) => {
   res.render("login");
 });
-
-app.get("/register", (req, res) => {
-  const locations = locationController.allLocations();
-  console.log(locations);
-  res.render("register", {locations:locations});
+app.get("/registerOwner", (req, res) => {
+  res.render("registerOwner");
 });
+app.get("/dashboard", (req, res) => {
+  const role = req.session.user.role;
+  const company = companyModel.getCompanyByCompanyID(req.session.user.company);
+  res.render("dashboard", {role:role, companyDict:company});
+})
+app.get("/inventory", (req, res) => {
+  res.render("inventory");
+})
+app.get("/location", (req, res) => {
+  res.render("location");
+})
+app.get("/warehouse", (req, res) => {
+  res.render("warehouse");
+})
+app.get("/order", (req, res) => {
+  res.render("order");
+})
+app.get("/account", (req, res) => {
+  res.render("account");
+})
+app.get("/company", (req, res) => {
+  res.render("company");
+})
 
+app.get("/logout", userController.logOut);
 
 app.post("/api/login", userValidator.loginValidator, userController.login);
+app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
 
-app.post("/api/register", userValidator.registerValidator, userController.createNewUser);
 if(isProduction) {
   app.set('trust proxy',1);
   app.use(helmet());
   app.use(productionErrorHandler);
 }
+
 
 app.listen(process.env.PORT, () => {
   const BLUE = "\u001b[34;1m";
