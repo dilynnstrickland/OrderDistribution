@@ -35,6 +35,10 @@ const userController = require('./Controllers/userControllers');
 const locationController = require('./Controllers/locationControllers')
 const userValidator = require('./Validators/userValidators');
 
+app.get("/index", (req, res) => {
+  res.render("index");
+});
+
 app.get("/login", (req, res) => {
   res.render("login");
 });
