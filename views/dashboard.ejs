@@ -384,3 +384,39 @@
 </body>
 
 </html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <Title>Distro - Dashboard</Title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./output.css">
+</head>
+
+<body>
+  <%- include('partials/navbar.ejs') %>
+
+  <% if(session.isLoggedIn === true) { %>
+    <h1 class="text-4xl text-green-600">You're logged in!</h1>
+        <% if(session.role === 1) { %>                                                                            
+            <h2>You're a Location Manager (role=1)</h2>
+        <% } else if(session.role === 2) { %>                                                                            
+            <h2>You're a Warehouse Manager (role=2)</h2>
+        <% } else if(session.role === 3) { %>                                                                            
+            <h2>You're a Company Owner (role=3)</h2>
+        <% } else if(session.role === 4) { %>                                                                            
+            <h2>You're an Administrator (role=4)</h2>
+        <% } else { %>
+            <h2>You're an Unassigned User (role=0) </h2>
+    <% }} %>
+
+    <% if(session.isLoggedIn === false) { %>
+        <h1 class="text-4xl text-red-600">YOU ARE NOT LOGGED IN</h1>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
+
+    <h3 class="text-sm">Everyone should be able to see this bottom line, even if they aren't logged in.</h3>
+</body>
+
+</html>

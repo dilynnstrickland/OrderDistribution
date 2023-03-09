@@ -51,10 +51,16 @@ app.get("/index", (req, res) => {
 
 // Also send to index. We're covering our bases here.
 app.get("/home", (req, res) => {
+  res.render("index", {session: req.session}, {session: req.session});
+});
+
+// Also send to index. We're covering our bases here.
+app.get("/home", (req, res) => {
   res.render("index", {session: req.session});
 });
 app.use( express.static( "public" ) );
 
+// Login
 // Login
 app.get("/login", (req, res) => {
   res.render("login", {session: req.session});
