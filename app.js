@@ -43,8 +43,23 @@ const userValidator = require('./Validators/userValidators');
 const itemController = require('./Controllers/itemController');
 const itemModel = require('./Models/itemModel');
 
+/Router to dashboard Controller
+const dashboardRouter = require('./Controllers/dashboardControllers')
+app.use('/dashboard', dashboardRouter);
+
+// Allow someone to go to host.domain/ instead of host.domain/index
+app.get("/", (req, res) => {
+  res.render("index", {session: req.session});
+});
+
+// Send to index
 app.get("/index", (req, res) => {
-  res.render("index");
+  res.render("index", {session: req.session});
+});
+
+// Also send to index. We're covering our bases here.
+app.get("/home", (req, res) => {
+  res.render("index", {session: req.session});
 });
 
 app.get("/index", (req, res) => {
@@ -83,8 +98,12 @@ app.get("/login", (req, res) => {
   res.render("login", {session: req.session});
 });
 // Register
-app.get("/registerOwner", (req, res) => {
-  res.render("registerOwner");
+
+// Register
+app.get("/register", (req, res) => {
+  const locations = locationController.allLocations();
+  console.log(locations);
+  res.render("register", {locations:locations});
 });
 
 //Views Allowed for Login Users
@@ -194,6 +213,10 @@ app.get("/addInv", (req, res) => {
 // app.get("/company", (req, res) => {
 //   res.render("company");
 // })
+// Allow someone to go to host.domain/ instead of host.domain/index
+app.get("/404", (req, res) => {
+  res.render("notfound", {session: req.session});
+});
 
 // Allow someone to go to host.domain/ instead of host.domain/index
 app.get("/404", (req, res) => {

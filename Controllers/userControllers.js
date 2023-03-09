@@ -35,10 +35,12 @@ async function login(req, res) {
 
     if (!req.body.username || !req.body.password){
         console.log("User has not entered username or password");
+        console.log("User has not entered username or password");
         return res.sendStatus(400);
     }
 
     if (!userModel.getUserByUsername(username)){ // if user non-existent
+        console.log("User does not exist.");
         console.log("User does not exist.");
         return res.sendStatus(400);
     }
@@ -47,8 +49,10 @@ async function login(req, res) {
 
     if(!user) {
         console.log("User does not exist");
+        console.log("User does not exist");
         return res.sendStatus(400);
     } 
+    console.log("User exists.");
     console.log("User exists.");
     const {passwordHash} = user;
     if(await argon2.verify(passwordHash,password)) {
@@ -75,11 +79,8 @@ async function login(req, res) {
             }
             req.session.isLoggedIn = true;
             console.log("Login Successful. Redirecting to Dashboard.")
-            if( 0 <= user.role < 5) {
-                res.redirect('/dashboard');
-            //req.session.user.role = user.role;
-            }
-            res.redirect("/dashboard");//OK // This may not actually transmit because of redirect
+            res.redirect('/dashboard');
+            //return res.sendStatus(200);//OK // This may not actually transmit because of redirect
         });
     } else {
         return res.sendStatus(400);//Bad Request
