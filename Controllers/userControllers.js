@@ -16,21 +16,21 @@ async function login(req, res) {
     const {username, password} = req.body;
 
     if (!req.body.username || !req.body.password){
-        console.log("check");
+        console.log("User has not entered username or password");
         return res.sendStatus(400);
     }
 
     if (!userModel.getUserByUsername(username)){ // if user non-existent
-        console.log("check2");
+        console.log("User does not exist.");
         return res.sendStatus(400);
     }
     
     const user = userModel.getUserByUsername(username);
     if(!user) {
-        console.log("HEY");
+        console.log("User does not exist");
         return res.sendStatus(400);
     } 
-    console.log("HE");
+    console.log("User exists.");
     const {passwordHash} = user;
     console.log(passwordHash)
     if(await argon2.verify(passwordHash,password)) {
@@ -46,7 +46,9 @@ async function login(req, res) {
             req.session.user.firstName = user.firstName;
             req.session.user.lastName = user.lastName;
             req.session.isLoggedIn = true;
-            return res.sendStatus(200);//OK
+            console.log("Login Successful. Redirecting to Dashboard.")
+            res.redirect('/dashboard');
+            //return res.sendStatus(200);//OK // This may not actually transmit because of redirect
         });
     } else {
         return res.sendStatus(400);//Bad Request
