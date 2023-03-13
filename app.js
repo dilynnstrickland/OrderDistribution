@@ -42,6 +42,9 @@ app.get("/login", (req, res) => {
 app.get("/registerOwner", (req, res) => {
   res.render("registerOwner");
 });
+app.get("/registerEmployee", (req, res) => {
+  res.render("registerEmployee");
+});
 app.get("/dashboard", (req, res) => {
   const role = req.session.user.role;
   const company = companyModel.getCompanyByCompanyID(req.session.user.company);
@@ -69,6 +72,7 @@ app.get("/company", (req, res) => {
 app.get("/logout", userController.logOut);
 
 app.post("/api/login", userValidator.loginValidator, userController.login);
+app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
 app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
 
 if(isProduction) {
