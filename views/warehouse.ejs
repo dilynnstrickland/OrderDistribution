@@ -744,80 +744,6 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <meta charset="UTF-8">
-  <Title>Distro - Warehouse</Title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./output.css">
-</head>
-
-<body>
-  <%- include('partials/navbar.ejs', session) %>
-
-  <% if(session.isLoggedIn === true) { %>
-    <h1 class="text-4xl text-green-600">You're logged in!</h1>
-        <% if(session.role === 2) { %>                                                                            
-            <h2>You're a Warehouse Manager (role=1), you have access to this WAREHOUSE page</h2>
-        <% } else if(session.role === 3) { %>                                                                            
-            <h2>You're a Company Owner (role=3), you have access, but your WAREHOUSE access will look different.</h2>
-        <% } else if(session.role === 4) { %>                                                                            
-            <h2>You're an Administrator (role=4), you also have access, but your WAREHOUSE access will look different.</h2>
-        <% } else { %>
-            <div>
-                <%- include('partials/accessDenied.ejs') %>
-            </div>
-    <% }} %>
-
-    <% if(session.isLoggedIn === false) { %>
-        <h1 class="text-4xl text-red-600">YOU ARE NOT LOGGED IN</h1>
-        <%- include('partials/accessDenied.ejs') %>
-    <% } %>
-</main>
-
-
-
-
-<script>
-    /*Toggle dropdown list*/
-    function toggleDD(myDropMenu) {
-        document.getElementById(myDropMenu).classList.toggle("invisible");
-    }
-    /*Filter dropdown options*/
-    function filterDD(myDropMenu, myDropMenuSearch) {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById(myDropMenuSearch);
-        filter = input.value.toUpperCase();
-        div = document.getElementById(myDropMenu);
-        a = div.getElementsByTagName("a");
-        for (i = 0; i < a.length; i++) {
-            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
-            } else {
-                a[i].style.display = "none";
-            }
-        }
-    }
-    // Close the dropdown menu if the user clicks outside of it
-    window.onclick = function(event) {
-        if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
-            var dropdowns = document.getElementsByClassName("dropdownlist");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (!openDropdown.classList.contains('invisible')) {
-                    openDropdown.classList.add('invisible');
-                }
-            }
-        }
-    }
-</script>
-
-
-</body>
-
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -1206,12 +1132,5 @@
 
 
 </body>
-
-</html>
-
-    <h3 class="text-sm">Everyone should be able to see this bottom line, even if they aren't logged in.</h3>
-</body>
-
-</html>
 
 </html>

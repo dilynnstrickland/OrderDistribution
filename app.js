@@ -61,6 +61,7 @@ app.get("/index", (req, res) => {
 app.get("/home", (req, res) => {
   res.render("index", {session: req.session});
 });
+app.use( express.static( "public" ) );
 
 app.get("/index", (req, res) => {
   res.render("index");
