@@ -3,36 +3,121 @@
 
 <head>
   <meta charset="UTF-8">
-  <Title>Login</Title>
+  <Title>Distro - Home</Title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./output.css">
   <script type="text/javascript" src="../public/js/login.js" defer></script>
 </head>
 
 <body>
-    <div class="wrapper">
-    <h2>Login</h2>
-        <form action="/api/login" method="POST" id="loginForm">
-            <div class="input-box">
-            <label for="username">Username</label>
-            <input type="text" name="username" placeholder="Enter your username" required>
-            </div>
-            <div class="input-box">
-            <label for="password">Password</label>
-            <input type="password" name="password" placeholder="Enter your password" required>
-            </div>
-            <div class="input-box button_1">
-            <input type="Submit" value="Login">
-            </div>
-            <div class="text">
-            <h5><a href="/contact">CONTACT</a></h5>
-            </div>
-        </form>
-        <div class="text">
-          <h3><a href="/register">Register</a></h3>
+  <%- include('partials/header.ejs', session) %>
+  <!-- Hero Section -->
+  <section class="bg-gray-50">
+    <div
+      class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center"
+    >
+      <div class="mx-auto max-w-3xl text-center">
+        <h1 class="text-5xl font-extrabold sm:text-5xl">
+          It's time to make some upgrades
+          <strong class="font-extrabold text-red-600 sm:block">
+            Choose Distro!
+          </strong>
+        </h1>
+  
+        <p class="mt-4 sm:text-xl sm:leading-relaxed">
+          We've created a simple, yet powerful, distribution system,
+          designed for small businesses
+        </p>
+  
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+          <a
+            class="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-600 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
+            href="/register"
+          >
+            Register
+          </a>
+  
+          <a
+            class="block w-full rounded px-12 py-3 text-sm font-medium text-red-500 shadow hover:text-red-600 focus:outline-none focus:ring active:text-red-500 sm:w-auto"
+            href="/login"
+          >
+            Login
+          </a>
         </div>
+      </div>
     </div>
-    <div class="bg-red-500">TEST TAILWIND</div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="bg-blue-500">
+    <div class="container px-6 py-12 mx-auto text-gray-50">
+      <div class="grid items-center gap-4 xl:grid-cols-5 ">
+        <div class="max-w-2xl mx-auto my-8 space-y-4 text-center xl:col-span-2 xl:text-left ">
+          <h2 class="text-4xl font-bold">We've had great feedback from our users!</h2>
+          <p class="dark:text-gray-400">Take a look at what some of them had to say.</p>
+        </div>
+        <div class="p-6 xl:col-span-3">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div class="grid content-center gap-4">
+              <div class="p-6 rounded shadow-md dark:bg-gray-900">
+                <p>This website is actually the worst. It ruined my company, and my life fell apart. Who knew that distribution websites could have such a devestating effect on my life!</p>
+                <div class="flex items-center mt-4 space-x-4">
+                  <img src="https://source.unsplash.com/50x50/?portrait?1" alt="" class="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500">
+                  <div>
+                    <p class="text-lg font-semibold">Leroy Jenkins</p>
+                    <p class="text-sm dark:text-gray-400">CTO of Company Co.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 rounded shadow-md dark:bg-gray-900">
+                <p>This company saved my company! I don't know where i'd be without Distro! They even attended my wedding!</p>
+                <div class="flex items-center mt-4 space-x-4">
+                  <img src="https://source.unsplash.com/50x50/?portrait?2" alt="" class="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500">
+                  <div>
+                    <p class="text-lg font-semibold">Leroy Jenkins</p>
+                    <p class="text-sm dark:text-gray-400">CTO of Company Co.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid content-center gap-4">
+              <div class="p-6 rounded shadow-md dark:bg-gray-900">
+                <p>Who made this? It has the vibe of college project but it works well, so it's hard to say. This service does what it says on the tin.</p>
+                <div class="flex items-center mt-4 space-x-4">
+                  <img src="https://source.unsplash.com/50x50/?portrait?3" alt="" class="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500">
+                  <div>
+                    <p class="text-lg font-semibold">Leroy Jenkins</p>
+                    <p class="text-sm dark:text-gray-400">CTO of Company Co.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 rounded shadow-md dark:bg-gray-900">
+                <p>What kind of name is Distro?</p>
+                <div class="flex items-center mt-4 space-x-4">
+                  <img src="https://source.unsplash.com/50x50/?portrait?4" alt="" class="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500">
+                  <div>
+                    <p class="text-lg font-semibold">Leroy Jenkins</p>
+                    <p class="text-sm dark:text-gray-400">CTO of Company Co.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Temp Login/Register Buttons-->
+  <!-- <div class="wrapper">
+    <div class="text">
+      <h3><a href="/login">Login</a></h3>
+    </div>
+    <div class="text">
+      <h3><a href="/register">Register</a></h3>
+    </div>
+  </div> -->
+  <%- include('partials/footer.ejs', session) %>
 </body>
 
 </html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Distro - Dashboard</title>
+    <title>Distro - Location</title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/> <!--Replace with your tailwind.css once created-->
@@ -32,18 +32,26 @@
     <!-- Dasboard -->
     <div class="flex flex-col md:flex-row">
         <!-- Vertical Nav -->
-        <%- include('partials/dash_nav.ejs', {session, page: 'overview'}) %>
+        <%- include('partials/dash_nav.ejs', {session, page: 'location'}) %>
         <!-- Actual Dashboard -->
         <section>
             <div id="main" class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
 
+                <!-- Page Title -->
                 <div class="bg-gray-800 pt-3">
                     <div class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
                         <!-- Change this for each page -->
-                        <h1 class="font-bold pl-2">Overview (Don't edit these cards, they're being used as templates)</h1>
+                        <h1 class="font-bold pl-2">Location</h1>
                     </div>
                 </div>
 
+                <!-- Insert Forms Below Here -->
+
+                <h1 class="text-7xl text-red-600"> Test </h1>
+
+                <!-- Insert Forms Above Here -->
+
+                <!-- Small Cards -->
                 <div class="flex flex-wrap">
                     <div class="w-full md:w-1/2 xl:w-1/3 p-6">
                         <!--Metric Card-->
@@ -137,7 +145,7 @@
                     </div>
                 </div>
 
-
+                <!-- Graph Cards -->
                 <div class="flex flex-row flex-wrap flex-grow mt-2">
 
                 <div class="w-full md:w-1/2 xl:w-1/3 p-6">
