@@ -26,11 +26,15 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));//session
 
+//For Static Views
 app.use(express.static("public", {index: "index.html", extensions: ["html"]}));
 app.use(express.json({limit: '200kb'}));
 app.use(express.urlencoded({ extended: false }));
 
+//For Dynamic Views
 app.set("view engine", "ejs");
+
+//Loading Controllers
 const userController = require('./Controllers/userControllers');
 const locationController = require('./Controllers/locationControllers');
 const companyModel = require('./Models/companyModel');
@@ -71,9 +75,66 @@ app.get("/login", (req, res) => {
 app.get("/registerOwner", (req, res) => {
   res.render("registerOwner");
 });
+
+//Views Allowed for Login Users
+//Views Allowed for Owner or Admin Users
 app.get("/registerEmployee", (req, res) => {
-  res.render("registerEmployee");
+  if(req.session.isLoggedIn) {
+    if(req.session.user.role == 3 || req.session.user.role == 4) {
+      res.render("registerEmployee"); 
+    }
+  } else {
+    res.sendStatus(401);
+  }
 });
+app.get("/registerLocation", (req, res) => {
+  if(req.session.isLoggedIn) {
+    if(req.session.user.role == 3 || req.session.user.role == 4) {
+      res.render("registerLocation"); 
+    }
+  } else {
+    res.sendStatus(401);
+  }
+});
+app.get("/registerWarehouse", (req, res) => {
+  if(req.session.isLoggedIn) {
+    if(req.session.user.role == 3 || req.session.user.role == 4) {
+      res.render("registerWarehouse"); 
+    }
+  } else {
+    res.sendStatus(401);
+  }
+});
+app.get("/manageLocation", (req, res) => {
+  if(req.session.isLoggedIn) {
+    if(req.session.user.role == 3 || req.session.user.role == 4) {
+      const locations = locationController.allLocationsByCompany(req);
+      res.render("manageLocation", {Locations:locations}); 
+    }
+  } else {
+    res.sendStatus(401);
+  }
+})
+app.get("/manageWarehouse", (req, res) => {
+  if(req.session.isLoggedIn) {
+    if(req.session.user.role == 3 || req.session.user.role == 4) {
+      res.render("manageWarehouse"); 
+    }
+  } else {
+    res.sendStatus(401);
+  }
+})
+app.get("/manageEmployee", (req, res) => {
+  if(req.session.isLoggedIn) {
+    if(req.session.user.role == 3 || req.session.user.role == 4) {
+      res.render("manageEmployee"); 
+    }
+  } else {
+    res.sendStatus(401);
+  }
+})
+
+//Views Allowed for All-Role Users
 app.get("/dashboard", (req, res) => {
   const role = req.session.user.role;
   const company = companyModel.getCompanyByCompanyID(req.session.user.company);
@@ -82,21 +143,17 @@ app.get("/dashboard", (req, res) => {
 app.get("/inventory", (req, res) => {
   res.render("inventory");
 })
-app.get("/location", (req, res) => {
-  res.render("location");
-})
-app.get("/warehouse", (req, res) => {
-  res.render("warehouse");
-})
 app.get("/order", (req, res) => {
   res.render("order");
 })
 app.get("/account", (req, res) => {
   res.render("account");
 })
-app.get("/company", (req, res) => {
-  res.render("company");
-})
+
+
+// app.get("/company", (req, res) => {
+//   res.render("company");
+// })
 
 // Allow someone to go to host.domain/ instead of host.domain/index
 app.get("/404", (req, res) => {
@@ -107,7 +164,7 @@ app.get("/logout", userController.logOut);
 // Login & Register call functions in the userControllers.js file. // This really confused Cameron.
 app.post("/api/login", userValidator.loginValidator, userController.login);
 app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
-app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
+app.post("/api/registerLocation", locationController.createNewLocation);
 
 
 if(isProduction) {
