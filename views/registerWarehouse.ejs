@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Registration</title>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+</head>
+<body>
+    <div class = "registrationPage">
+        <h2>Registration</h2><br>
+        <form action="/api/registerOwner" method="POST" id="registerForm">
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+        
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+        
+            <label for="passwordConfirm">Confirm Password:</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" required><br><br>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="example@gmail.com"required><br><br>
+
+            <label for="firstName">First Name:</label>
+            <input type="firstName" id="firstName" name="firstName" required><br><br>
+
+            <label for="lastName">Last Name:</label>
+            <input type="lastName" id="lastName" name="lastName" required><br><br>
+
+            <label for="companyName">Company Name:</label>
+            <input type="companyName" id="companyName" name="companyName" required><br><br>
+
+            <label for="companyAddr">Company Address:</label>
+            <input type="companyAddr" id="companyAddr" name="companyAddr" required><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+        <br><br>
+        <div class="login">
+            <span>Already have an account?</span>
+            <label for='login'>Login:</label> 
+            <a href="/login">here</a>
+        </div>
+    </div>
+    
+    
+
+</body>
+</html>
+
+
+<!-- <fieldset>
+                <legend>Role:</legend>
+                <div>
+                    <input type="radio" id="locationManager" name="role" value=1 checked>
+                    <label for="locationManager">Location Manager</label>
+                </div>
+                <div>
+                    <input type="radio" id="warehouseManager" name="role" value=2 >
+                    <label for="warehouseManager">Warehouse Manager</label>
+                </div>
+                <div>
+                    <input type="radio" id="ownwer" name="role" value=3 >
+                    <label for="ownwer">Owner</label>
+                </div>
+                <div>
+                    <input type="radio" id="admin" name="role" value=4 >
+                    <label for="admin">Admin</label>
+                </div>
+            </fieldset>
+            <br><br> -->

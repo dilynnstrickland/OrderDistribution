@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Registration</title>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+</head>
+<body>
+    <div class = "registrationPage">
+        <h2>Location Registration</h2><br>
+        <form action="/api/registerLocation" method="POST" id="registerForm">
+            
+            <label for="name">Name of Location:</label>
+            <input type="text" id="name" name="name" required><br><br>
+        
+            <label for="address">Address:</label>
+            <input type="address" id="address" name="address" required><br><br>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+        <br><br>
+    </div>
+</body>
+</html>
+
+<!-- locationID TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    address TEXT NOT NULL,
+    company TEXT,
+    isWarehouse INTEGER DEFAULT 0,
+    inv TEXT, -->
