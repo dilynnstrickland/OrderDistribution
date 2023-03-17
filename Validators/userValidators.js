@@ -39,7 +39,8 @@ const registerOwnerSchema = Joi.object({
     companyAddr:Joi.string()
         .required(),
 });
-const registerSchema = Joi.object({
+
+const registerEmployeeSchema = Joi.object({
     username:Joi.string()
         .min(3)
         .max(15)
@@ -63,7 +64,11 @@ const registerSchema = Joi.object({
         
     lastName:Joi.string()
         .required(),
+    
+    location:Joi.string()
+        .required(),
 });
+
 const loginSchema = Joi.object({
     username:Joi.string()
         .min(3)
@@ -102,8 +107,8 @@ function registerOwnerValidator(req, res, next) {
     next();
 }
 
-function registerValidator(req, res, next) {
-    const {value, error} = registerSchema.validate(req.body, validateOpt);
+function registerEmployeeValidator(req, res, next) {
+    const {value, error} = registerEmployeeSchema.validate(req.body, validateOpt);
     console.log(req.body);
     
     if(error) {
@@ -117,6 +122,6 @@ function registerValidator(req, res, next) {
 
 module.exports = {
     registerOwnerValidator,
-    registerValidator,
+    registerEmployeeValidator,
     loginValidator
 }

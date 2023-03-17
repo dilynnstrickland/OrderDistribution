@@ -10,6 +10,21 @@
     <div class="title">
         <h1>Warehouse Panel</h1>
     </div>
+    <h3>List of Warehouses</h3>
+        <div class="listWarehouse">
+            <% if(!Warehouses) { %>
+                <h2>No Warehouse Found</h2>
+            <% } else { %> 
+                <% for(const i of Warehouses) { %> 
+                    <div>
+                        <div>
+                            <span>Name: </span><%=i.name%><br>
+                            <span>Address: <%=i.address%></span><br><br>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %> 
+        </div>
     <div class="registerWarehouseCard">
         <h3><a href="/registerWarehouse">Add a New Warehouse</a></h3>
     </div>

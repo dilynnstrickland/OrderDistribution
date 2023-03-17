@@ -30,17 +30,14 @@
             <label for="lastName">Last Name:</label>
             <input type="lastName" id="lastName" name="lastName" required><br><br>
 
-            <fieldset>
-                <legend>Role:</legend>
-                <div>
-                    <input type="radio" id="locationManager" name="role" value=1 checked>
-                    <label for="locationManager">Location Manager</label>
-                </div>
-                <div>
-                    <input type="radio" id="warehouseManager" name="role" value=2 >
-                    <label for="warehouseManager">Warehouse Manager</label>
-                </div>
-            </fieldset>
+            <label for="locaiton">Location:</label>
+            <select name="location" id="location" required>
+                <option value="">--Please Select Location to Assign--</option>
+                <% for (const i of Locations) { %>
+                <option value="<%=i.locationID%>"><%=i.name%></option>
+            <% } %>
+            </select>
+
             <br><br>
             <button type="submit">Submit</button>
         </form>

@@ -1,6 +1,7 @@
 "use strict";
 
 const db = require("./db");
+const locationModel = require('../Models/locationModel');
 const crypto = require('crypto');
 const argon2 = require('argon2');
 
@@ -28,11 +29,16 @@ async function addOwner(username, password, email, firstName, lastName, newCompa
     }
 }
 
-async function addUser(username, password, email, firstName, lastName) {
+async function addEmployee(username, password, email, firstName, lastName, location, company) {
     try{
         const userID = crypto.randomUUID();
         const hash = await argon2.hash(password);
-        const sqlUsersTable = `INSERT INTO Users(userID, username, passwordHash, email, firstName, lastName) VALUES (@userID, @username, @passwordHash, @email, @firstName, @lastName)`;
+        const locationObj = locationModel.getLocationByLocationID(location);
+        let role = 1;
+        if(locationObj.isWarehouse) {
+            role = 0;
+        }
+        const sqlUsersTable = `INSERT INTO Users(userID, username, passwordHash, email, firstName, lastName, company, role, location) VALUES (@userID, @username, @passwordHash, @email, @firstName, @lastName, @company, @role, @location)`;
         const stmtUsersTable = db.prepare(sqlUsersTable);
         stmtUsersTable.run({
             "userID":userID,
@@ -40,11 +46,12 @@ async function addUser(username, password, email, firstName, lastName) {
             "passwordHash":hash,
             "email":email,
             "firstName":firstName,
-            "lastName":lastName
-
+            "lastName":lastName,
+            "company":company,
+            "role":role,
+            "location":location
         });
-        const user = getUserByUsername(username);
-        return user;
+        return true;
     } catch(err) {
         console.error(err);
         return false;
@@ -62,6 +69,17 @@ function getUserByUsername(username) {
     }   
 }
 
+function getEmployeesByCompany(company) {
+    const sql = `SELECT * FROM Users WHERE company=@company AND role=@role`;
+    try {
+        const stmt = db.prepare(sql);
+        const employees = stmt.all({"company":company, "role":1 || 2});
+        return employees;  
+    } catch(err) {
+        console.error(err);
+    }   
+}
+
 function getRoleByUsername(username) {
     const sql = `SELECT role FROM Users WHERE username=@username`;
     try {
@@ -74,8 +92,9 @@ function getRoleByUsername(username) {
 }
 
 module.exports = {
-    addUser,
+    addEmployee,
     addOwner,
     getUserByUsername,
     getRoleByUsername,
+    getEmployeesByCompany
 };

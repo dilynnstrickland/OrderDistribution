@@ -38,6 +38,7 @@ app.set("view engine", "ejs");
 const userController = require('./Controllers/userControllers');
 const locationController = require('./Controllers/locationControllers');
 const companyModel = require('./Models/companyModel');
+const userModel = require("./Models/userModel");
 const userValidator = require('./Validators/userValidators');
 
 //Views Allowed for Non-Login Users
@@ -53,7 +54,8 @@ app.get("/registerOwner", (req, res) => {
 app.get("/registerEmployee", (req, res) => {
   if(req.session.isLoggedIn) {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
-      res.render("registerEmployee"); 
+      const locations = locationController.allLocationsByCompany(req);
+      res.render("registerEmployee", {Locations:locations}); 
     }
   } else {
     res.sendStatus(401);
@@ -90,7 +92,8 @@ app.get("/manageLocation", (req, res) => {
 app.get("/manageWarehouse", (req, res) => {
   if(req.session.isLoggedIn) {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
-      res.render("manageWarehouse"); 
+      const warehouses = locationController.allWarehousesByCompany(req);
+      res.render("manageWarehouse", {Warehouses:warehouses}); 
     }
   } else {
     res.sendStatus(401);
@@ -99,7 +102,8 @@ app.get("/manageWarehouse", (req, res) => {
 app.get("/manageEmployee", (req, res) => {
   if(req.session.isLoggedIn) {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
-      res.render("manageEmployee"); 
+      const employees = userModel.getEmployeesByCompany(req.session.user.company);
+      res.render("manageEmployee", {Employees:employees}); 
     }
   } else {
     res.sendStatus(401);
@@ -132,6 +136,8 @@ app.get("/logout", userController.logOut);
 app.post("/api/login", userValidator.loginValidator, userController.login);
 app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
 app.post("/api/registerLocation", locationController.createNewLocation);
+app.post("/api/registerWarehouse", locationController.createNewWarehouse);
+app.post("/api/registerEmployee", userValidator.registerEmployeeValidator, userController.createNewEmployee)
 
 if(isProduction) {
   app.set('trust proxy',1);
