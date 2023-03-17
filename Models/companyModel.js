@@ -21,7 +21,6 @@ async function addCompany(companyName, companyAddr) {
 }
 
 function getCompanyByCompanyID(companyId) {
-    console.log(companyId);
     const sql = `SELECT * FROM Company WHERE companyID=@companyID`;
     try {
         const stmt = db.prepare(sql);

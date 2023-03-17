@@ -10,6 +10,26 @@
     <div class="title">
         <h1>Employee Panel</h1>
     </div>
+    <div class="listEmployee">
+        <% if(!Employees) { %>
+            <h2>No Employee Found</h2>
+        <% } else { %> 
+            <% for(const i of Employees) { %> 
+                <div>
+                    <div>
+                        <span>Name: </span><%=i.firstName%> <%=i.lastName%><br>
+                        <% if(i.role == 1) { %>
+                            <span>Role: Location Manager</span><br>
+                        <% } else if (i.role == 2) { %>
+                            <span>Role: Warehouse Manager</span><br>
+                        <% } %>
+                        <address id="card-cont">Email:<a href="mailto:"+<%=i.email%>><%=i.email%></a></address>
+                        <br><br>
+                    </div>
+                </div>
+            <% } %>
+        <% } %> 
+    </div>
     <div class="registerEmployeeCard">
         <h3><a href="/registerEmployee">Add a New Employee</a></h3>
     </div>

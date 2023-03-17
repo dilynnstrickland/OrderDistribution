@@ -18,16 +18,15 @@ async function createNewOwner(req, res) {
     return res.redirect("/login");
 }
 
-async function createNewUser(req, res) {
-    const {username, password, email, firstName, lastName} = req.body;
-    const newUser = await userModel.addUser(username, password, email, firstName, lastName);
-    if(!newCompany){
+async function createNewEmployee(req, res) {
+    const {username, password, email, firstName, lastName, location} = req.body;
+    const company = req.session.user.company;
+    const newEmployee = await userModel.addEmployee(username, password, email, firstName, lastName, location, company);
+
+    if(!newEmployee){
         return res.sendStatus(409);//Conflict
     }
-    if(!newUser){
-        return res.sendStatus(409);//Conflict
-    }
-    return res.redirect("/dashboard");
+    return res.redirect("/manageEmployee");
 }
 
 async function login(req, res) {
@@ -110,7 +109,7 @@ function logOut(req, res) {
 // }
 
 module.exports = {
-    createNewUser,
+    createNewEmployee,
     createNewOwner,
     login,
     logOut,

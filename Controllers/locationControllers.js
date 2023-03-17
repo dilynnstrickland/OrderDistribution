@@ -6,6 +6,11 @@ function allLocationsByCompany(req) {
     return locationModel.getLocationsByCompany(company);
 } 
 
+function allWarehousesByCompany(req) {
+    const company = req.session.user.company;
+    return locationModel.getWarehousesByCompany(company);
+} 
+
 async function createNewLocation(req, res) {
     const {name, address} = req.body;
     const company = req.session.user.company
@@ -18,7 +23,21 @@ async function createNewLocation(req, res) {
     return res.redirect("/manageLocation");
 }
 
+async function createNewWarehouse(req, res) {
+    const {name, address} = req.body;
+    const company = req.session.user.company
+    const newWarehouse = await locationModel.addWarehouse(name, address, company);
+
+    if(!newWarehouse){
+        return res.sendStatus(409);//Conflict
+    }
+    
+    return res.redirect("/manageWarehouse");
+}
+
 module.exports = {
     allLocationsByCompany,
+    allWarehousesByCompany,
     createNewLocation,
+    createNewWarehouse
 }
