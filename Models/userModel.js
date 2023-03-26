@@ -151,4 +151,6 @@ module.exports = {
     updateCompany,
     getRoleByUsername,
     getEmployeesByCompany
+    updateRole,
+    updateCompany,
 };
