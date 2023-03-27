@@ -55,7 +55,8 @@ app.get("/registerEmployee", (req, res) => {
   if(req.session.isLoggedIn) {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
       const locations = locationController.allLocationsByCompany(req);
-      res.render("registerEmployee", {Locations:locations}); 
+      const warehouses = locationController.allWarehousesByCompany(req);
+      res.render("registerEmployee", {Locations:locations, Warehouses:warehouses}); 
     }
   } else {
     res.sendStatus(401);
