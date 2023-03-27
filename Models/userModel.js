@@ -36,7 +36,7 @@ async function addEmployee(username, password, email, firstName, lastName, locat
         const locationObj = locationModel.getLocationByLocationID(location);
         let role = 1;
         if(locationObj.isWarehouse) {
-            role = 0;
+            role = 2;
         }
         const sqlUsersTable = `INSERT INTO Users(userID, username, passwordHash, email, firstName, lastName, company, role, location) VALUES (@userID, @username, @passwordHash, @email, @firstName, @lastName, @company, @role, @location)`;
         const stmtUsersTable = db.prepare(sqlUsersTable);
@@ -70,10 +70,10 @@ function getUserByUsername(username) {
 }
 
 function getEmployeesByCompany(company) {
-    const sql = `SELECT * FROM Users WHERE company=@company AND role=@role`;
+    const sql = `SELECT * FROM Users WHERE company=@company AND role in (1, 2)`;
     try {
         const stmt = db.prepare(sql);
-        const employees = stmt.all({"company":company, "role":1 || 2});
+        const employees = stmt.all({"company":company});
         return employees;  
     } catch(err) {
         console.error(err);

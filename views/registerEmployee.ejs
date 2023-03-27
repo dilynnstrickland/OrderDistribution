@@ -32,10 +32,15 @@
 
             <label for="locaiton">Location:</label>
             <select name="location" id="location" required>
-                <option value="">--Please Select Location to Assign--</option>
+                <option value="">--Please Select Location (Location Manager)--</option>
                 <% for (const i of Locations) { %>
                 <option value="<%=i.locationID%>"><%=i.name%></option>
             <% } %>
+                <option value="">--Please Select Warehouse (Warehouse Manager)--</option>
+                <% for (const i of Warehouses) { %>
+                    <option value="<%=i.locationID%>"><%=i.name%></option>
+                <% } %>
+
             </select>
 
             <br><br>
