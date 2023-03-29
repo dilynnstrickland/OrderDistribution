@@ -6,11 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comapny&Location Registration</title>
     <link rel="stylesheet" type="text/css" href="css/register.css">
+    <div class="logo">
+        <img src="???"><a href="/dashboard">Home</a>
+    </div>
 </head>
 <body>
-            </form>
-            <br><br>
-        </div>
-    <% } %>
+    <div class="title">
+        <h1>Inventory Panel</h1>
+    </div>
+    <div class="inventoryList">
+        <% if(Items.length == 0 || !Items) { %>
+            <h2>No Item Found</h2>
+        <% } else { %> 
+            <% for(const i of Items) { %> 
+                <div>
+                    <div>
+                        <span>Item Name: </span><%=i.itemName%><br>
+                        <span>Item Brand: </span><%=i.itemBrand%><br>
+                        <span>Item Quantity: </span><%=i.itemQuantity%><br>
+                        <br><br>
+                    </div>
+                </div>
+            <% } %>
+        <% } %> 
+    </div>
+    <div class="addInvCard">
+        <h3><a href="/addInv">Add a New Item</a></h3>
+    </div>
 </body>
 </html>

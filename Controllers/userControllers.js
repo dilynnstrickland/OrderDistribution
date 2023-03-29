@@ -21,6 +21,7 @@ async function createNewOwner(req, res) {
 async function createNewEmployee(req, res) {
     const {username, password, email, firstName, lastName, location} = req.body;
     const company = req.session.user.company;
+    console.log(company, location);
     const newEmployee = await userModel.addEmployee(username, password, email, firstName, lastName, location, company);
 
     if(!newEmployee){
@@ -60,6 +61,11 @@ async function login(req, res) {
             req.session.user.lastName = user.lastName;
             if(user.company){
                 req.session.user.company = user.company;
+            } else {
+                return res.sendStatus(400);
+            }
+            if(user.location){
+                req.session.user.location = user.location;
             } else {
                 return res.sendStatus(400);
             }

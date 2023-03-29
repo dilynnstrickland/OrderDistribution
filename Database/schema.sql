@@ -24,8 +24,6 @@ CREATE TABLE IF NOT EXISTS Location ( -- Refers
     address TEXT NOT NULL,
     company TEXT,
     isWarehouse INTEGER DEFAULT 0,
-    inv TEXT,
-    FOREIGN KEY (inv) REFERENCES Inventory(invID),
     FOREIGN KEY (company) REFERENCES Company(companyID)
 );
 
@@ -40,7 +38,9 @@ CREATE TABLE IF NOT EXISTS Item (
 CREATE TABLE IF NOT EXISTS Inventory (
     invID TEXT PRIMARY KEY,  -- Name of Location
   	item TEXT,
+    location TEXT,
     itemQuantity INTEGER DEFAULT 0,  -- How many of the item is there
+    FOREIGN KEY (location) REFERENCES Location(locationID),
     FOREIGN KEY (item) REFERENCES Item(itemID)
 );
 
