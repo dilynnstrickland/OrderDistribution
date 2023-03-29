@@ -6,23 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Distro - Register</title>
     <link rel="stylesheet" type="text/css" href="css/register.css">
+    <div class="logo">
+        <img src="???"><a href="/dashboard">Home</a>
+    </div>
 </head>
 <body>
     <div class = "registrationPage">
         <h2>Registration</h2><br>
-        <form action="/api/registerEmployee" method="POST" id="registerForm">
+        <form action="/api/registerOwner" method="POST" id="registerForm">
             
-            <label for="name">Name of Location:</label>
-            <input type="text" id="name" name="name" required><br><br>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
         
-            <label for="address">Address:</label>
-            <input type="address" id="address" name="address" required><br><br>
-    
-            <br><br>
-            <button type="submit">Submit</button>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+        
+            <label for="passwordConfirm">Confirm Password:</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" required><br><br>
             
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="example@gmail.com"required><br><br>
+
+            <label for="firstName">First Name:</label>
+            <input type="firstName" id="firstName" name="firstName" required><br><br>
+
+            <label for="lastName">Last Name:</label>
+            <input type="lastName" id="lastName" name="lastName" required><br><br>
+
+            <label for="companyName">Company Name:</label>
+            <input type="companyName" id="companyName" name="companyName" required><br><br>
+
+            <label for="companyAddr">Company Address:</label>
+            <input type="companyAddr" id="companyAddr" name="companyAddr" required><br><br>
+
+            <button type="submit">Submit</button>
         </form>
         <br><br>
+        <div class="login">
+            <span>Already have an account?</span>
+            <label for='login'>Login:</label> 
+            <a href="/login">here</a>
+        </div>
     </div>
     
     
