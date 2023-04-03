@@ -117,40 +117,12 @@ function updateCompany(userId, company) {
     }
 }
 
-function updateRole(userId, role) {
-    const sql = `UPDATE Users SET role=@role WHERE userId=@userId`;
-    try {
-        const stmt = db.prepare(sql);
-        stmt.run({
-            "userId": userId,
-            "role": role
-        });
-    } catch(err) {
-        console.error(err);
-    }
-}
-
-function updateCompany(userId, company) {
-    const sql = `UPDATE Users SET company=@company WHERE userId=@userId`;
-    try {
-        const stmt = db.prepare(sql);
-        stmt.run({
-            "userId": userId,
-            "company": company
-        });
-    } catch (err) {
-        console.error(err);
-    }
-}
-
 module.exports = {
-    addEmployee,
     addOwner,
+    addEmployee,
     getUserByUsername,
     updateRole,
     updateCompany,
     getRoleByUsername,
     getEmployeesByCompany
-    updateRole,
-    updateCompany,
 };
