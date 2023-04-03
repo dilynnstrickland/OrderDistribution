@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -12,28 +13,75 @@
 
 
 <body>
-    <div class="wrapper">
-    <h2>Login</h2>
-        <form action="/api/login" method="POST" id="loginForm">
-            <div class="input-box">
-            <label for="username">Username</label>
-            <input type="text" name="username" placeholder="Enter your username" required>
-            </div>
-            <div class="input-box">
-            <label for="password">Password</label>
-            <input type="password" name="password" placeholder="Enter your password" required>
-            </div>
-            <div class="input-box button_1">
-            <input type="Submit" value="Login">
-            </div>
+
+    <div>
+      <div class="mt-36 text-center bg-red-400 m-96 rounded-lg">
+        <h1 class=" mb-10 text-5xl font-extrabold">Login</h1>
+        <div class="bg-gray-400 m-36 rounded-lg">
+            <form action="/api/login" method="POST" id="loginForm">
+                <div class="input-box">
+                  <label for="username">Username</label>
+                  <input type="text" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="input-box">
+                  <label for="password">Password</label>
+                  <input type="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="input-box button_1">
+                  <input type="Submit" value="Login">
+                </div>
+            </form>
             <div class="text">
-            <h5><a href="/contact">CONTACT</a></h5>
-            </div>
-        </form>
-        <div class="text">
-          <h3><a href="/registerOwner">Register</a></h3>
+              <h3>Don't have an account yet? <br><a href="/registerOwner">Register</a></h3>
+          </div>
         </div>
+      </div>
     </div>
+</body>
+
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to Distro</title>
+    <link href="../public/output.css" rel="stylesheet"></link>
+</head>
+
+<body class="bg-blue-200">
+  <%- include('partials/headerNoSession.ejs') %>
+    <main class="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl text-center mt-20">
+      <h1 class="text-4xl font-bold text-black text-center mb-10">Login</h1>
+        <section>
+            <h3 class="font-bold text-2xl">Welcome to Distro</h3>
+            <p class="text-gray-600 pt-2">Sign in to your account.</p>
+        </section>
+
+        <section class="mt-10">
+            <form class="flex flex-col" action="/login" method="post">
+                <div class="mb-6 pt-3 rounded bg-gray-200">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="username">Username:</label>
+                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="text" name="username" id="username">
+                </div>
+                <div class="mb-6 pt-3 rounded bg-gray-200">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="password">Password:</label>
+                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="password" name="password" id="password">
+                </div>
+                <button class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 rounded shodow-lg hover:shadow-xl transition duration-200" type="submit">Sign In</button>
+            </form>
+            <div class="mt-5">
+                <h4>Don't have an account?</h4>
+                <div class="mt-2">
+                  <a href="/register" class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">Register</a>
+                </div>
+                
+            </div>
+        </section>
+    </main>
+    
 </body>
 
 </html>

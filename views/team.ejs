@@ -5,8 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Team</title>
+    <link rel="stylesheet" type="text/css" href="../public/output.css">
 </head>
-<body>
+<style>
+    img[src="/assets/dilynn.jpg"] {
+        display: inline;
+    }
+    img[src="/assets/cam.jpg"] {
+        display: inline;
+    }
+</style>
+<body class="inline">
     <%- include('partials/headerNoSession.ejs') %>
+    <div class="text-center">
+        <h1 class="mt-36 mb-10 text-5xl font-extrabold">We are committed to your user experience!
+            <p>Thanks for choosing <span class="text-red-400">Distro</span>!</p>
+        </h1>
+    </div>
+    <div class="text-center border-4 border-red-400 mr-60 ml-60 mb-10 font-extrabold">
+        <h1 class="mt-10 text-5xl underline underline-offset-2">Our Team</h1>
+
+        <div class="grid grid-cols-1 gap-4 place-content-center mt-10">
+            <div class="border-4 border-black mr-60 ml-60">
+                <div>
+                    <img src="/assets/dilynn.jpg" class="mt-10"></img>
+                    <div class="mt-10 mb-5 text-3xl">Dilynn Strickland 
+                        <p class="text-xl">Software Engineer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-4 border-black mr-60 ml-60">
+                <div>
+                    <img src="/assets/cam.jpg" class="w-3/5 mt-10"></img>
+                    <div class="mt-10 mb-5 text-3xl">Cameron Cobb 
+                        <p class="text-xl">Software Engineer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-4 border-black mr-60 ml-60">
+                <div>
+                    <img src="/assets/cam.jpg" class="w-1/2 mt-10"></img>
+                    <div class="mt-10 mb-5 text-3xl">Braden Jackson 
+                        <p class="text-xl">Software Engineer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-4 border-black mr-60 ml-60 mb-10">
+                <div>
+                    <img src="/assets/cam.jpg" class="w-1/2 mt-10"></img>
+                    <div class="mt-10 mb-5 text-3xl">Yuji Kikuchi
+                        <p class="text-xl">Software Engineer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer.ejs') %>
 </body>
 </html>
