@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/> <!--Replace with your tailwind.css once created-->
+    <link rel="stylesheet" type="text/css" href="../public/output.css">
+
+</head>
+
+<nav aria-label="menu nav" class="bg-gray-800 pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0">
+
+    <div class="flex flex-wrap items-center">
+        <div class="flex flex-shrink md:w-1/2 justify-center md:justify-start text-white items-center">
+            <a href="/index" aria-label="Home">
+                <img class="md:ml-3" src="../assets/navbarLogo2.png" ></img></span>
+            </a>
+        </div>
+        <div class="flex w-full pt-2 content-center justify-between md:w-1/2 md:justify-end">
+            <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
+                <li class="flex-1 md:flex-none md:mr-3">
+                    <a class="inline-block text-gray-400 no-underline hover:text-gray-200 text-underline py-2 px-4" id="about" href="/about">About</a>
+                </li>
+                <li class="flex-1 md:flex-none md:mr-3">
+                    <a class="inline-block text-gray-400 no-underline hover:text-gray-200 text-underline py-2 px-4" id="team" href="/team">Our Team</a>
+                </li>
+                <li class="flex-1 md:flex-none md:mr-3">
+                    <a class="inline-block text-gray-400 no-underline hover:text-gray-200 text-underline py-2 px-4" id="contact" href="/contact">Contact</a>
+                </li>
+                <li class="flex-1 md:flex-none md:mr-3">
+                    <a class="inline-block text-gray-400 no-underline hover:text-gray-200 text-underline py-2 px-4" id="login" href="/login">Login</a>
+                </li>
+                <li class="flex-1 md:flex-none md:mr-3">
+                    <a class="inline-block text-gray-400 no-underline hover:text-gray-200 text-underline py-2 px-4" id="register" href="/register">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+<script>
+    const url = window.location.href;
+    const splitUrl = url.split("/");
+    const page = splitUrl[3];
+    const target = document.getElementById(page);
+    target.className = "inline-block py-2 px-4 text-white no-underline";
+</script>

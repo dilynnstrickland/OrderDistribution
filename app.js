@@ -47,7 +47,7 @@ const itemModel = require('./Models/itemModel');
 const dashboardRouter = require('./Controllers/dashboardControllers')
 app.use('/dashboard', dashboardRouter);
 
-app.use( express.static( "public" ) );
+app.use( express.static( "/public" ) );
 
 // Allow someone to go to host.domain/ instead of host.domain/index
 app.get("/", (req, res) => {
@@ -71,7 +71,7 @@ app.get("/login", (req, res) => {
 
 // Register
 app.get("/register", (req, res) => {
-  const locations = locationController.allLocations();
+  const locations = locationController.allLocationsByCompany();
   console.log(locations);
   res.render("register", {locations:locations});
 });
@@ -184,6 +184,18 @@ app.get("/addInv", (req, res) => {
   } else {
     res.sendStatus(401);
   }
+});
+
+app.get("/about", (req, res) => {
+  res.render("about");
+});
+
+app.get("/team", (req, res) => {
+  res.render("team");
+});
+
+app.get("/contact", (req, res) => {
+  res.render("contact");
 });
 
 
