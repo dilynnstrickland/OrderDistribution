@@ -47,35 +47,7 @@ const itemModel = require('./Models/itemModel');
 const dashboardRouter = require('./Controllers/dashboardControllers')
 app.use('/dashboard', dashboardRouter);
 
-// Allow someone to go to host.domain/ instead of host.domain/index
-app.get("/", (req, res) => {
-  res.render("index", {session: req.session});
-});
-
-// Send to index
-app.get("/index", (req, res) => {
-  res.render("index", {session: req.session});
-});
-
-// Also send to index. We're covering our bases here.
-app.get("/home", (req, res) => {
-  res.render("index", {session: req.session}, {session: req.session});
-});
 app.use( express.static( "public" ) );
-
-// Also send to index. We're covering our bases here.
-app.get("/home", (req, res) => {
-  res.render("index", {session: req.session});
-});
-app.use( express.static( "public" ) );
-
-app.get("/index", (req, res) => {
-  res.render("index");
-});
-
-//Router to dashboard Controller
-const dashboardRouter = require('./Controllers/dashboardControllers')
-app.use('/dashboard', dashboardRouter);
 
 // Allow someone to go to host.domain/ instead of host.domain/index
 app.get("/", (req, res) => {
@@ -89,22 +61,13 @@ app.get("/index", (req, res) => {
 
 // Also send to index. We're covering our bases here.
 app.get("/home", (req, res) => {
-  res.render("index", {session: req.session}, {session: req.session});
-});
-app.use( express.static( "public" ) );
-
-// Also send to index. We're covering our bases here.
-app.get("/home", (req, res) => {
   res.render("index", {session: req.session});
 });
-app.use( express.static( "public" ) );
 
-// Login
 // Login
 app.get("/login", (req, res) => {
   res.render("login", {session: req.session});
 });
-// Register
 
 // Register
 app.get("/register", (req, res) => {
@@ -113,7 +76,6 @@ app.get("/register", (req, res) => {
   res.render("register", {locations:locations});
 });
 
-//Views Allowed for Login Users
 //Views Allowed for Owner or Admin Users
 app.get("/registerEmployee", (req, res) => {
   if(req.session.isLoggedIn) {
@@ -126,6 +88,7 @@ app.get("/registerEmployee", (req, res) => {
     res.sendStatus(401);
   }
 });
+
 app.get("/registerLocation", (req, res) => {
   if(req.session.isLoggedIn) {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
@@ -135,6 +98,7 @@ app.get("/registerLocation", (req, res) => {
     res.sendStatus(401);
   }
 });
+
 app.get("/registerWarehouse", (req, res) => {
   if(req.session.isLoggedIn) {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
@@ -144,6 +108,7 @@ app.get("/registerWarehouse", (req, res) => {
     res.sendStatus(401);
   }
 });
+
 app.get("/manageLocation", (req, res) => {
   if(req.session.isLoggedIn) {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
@@ -153,7 +118,8 @@ app.get("/manageLocation", (req, res) => {
   } else {
     res.sendStatus(401);
   }
-})
+});
+
 app.get("/manageWarehouse", (req, res) => {
   if(req.session.isLoggedIn) {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
@@ -163,7 +129,8 @@ app.get("/manageWarehouse", (req, res) => {
   } else {
     res.sendStatus(401);
   }
-})
+});
+
 app.get("/manageEmployee", (req, res) => {
   if(req.session.isLoggedIn) {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
@@ -173,7 +140,7 @@ app.get("/manageEmployee", (req, res) => {
   } else {
     res.sendStatus(401);
   }
-})
+});
 
 //Views Allowed for All-Role Users
 app.get("/dashboard", (req, res) => {
@@ -184,7 +151,8 @@ app.get("/dashboard", (req, res) => {
   } else {
     res.sendStatus(401);
   }
-})
+});
+
 app.get("/inventory", (req, res) => {
   if(req.session.isLoggedIn) {
     const items = itemModel.getAllItemByLocationID(req.session.user.location);
@@ -192,28 +160,31 @@ app.get("/inventory", (req, res) => {
   } else {
     res.sendStatus(401);
   }
-})
+});
+
 app.get("/order", (req, res) => {
   if(req.session.isLoggedIn) {
     res.render("order");
   } else {
     res.sendStatus(401);
   }
-})
+});
+
 app.get("/account", (req, res) => {
   if(req.session.isLoggedIn) {
     res.render("account");
   } else {
     res.sendStatus(401);
   }
-})
+});
+
 app.get("/addInv", (req, res) => {
   if(req.session.isLoggedIn) {
     res.render("addInv");
   } else {
     res.sendStatus(401);
   }
-})
+});
 
 
 
