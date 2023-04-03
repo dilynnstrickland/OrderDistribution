@@ -64,11 +64,10 @@ async function login(req, res) {
             } else {
                 return res.sendStatus(400);
             }
+            console.log(user.location)
             if(user.location){
                 req.session.user.location = user.location;
-            } else {
-                return res.sendStatus(400);
-            }
+            } 
             req.session.isLoggedIn = true;
             if( 0 <= user.role < 5) {
                 req.session.user.role = user.role;
