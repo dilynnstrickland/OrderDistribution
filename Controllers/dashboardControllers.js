@@ -3,22 +3,40 @@
 const express = require("express");
 const dashboardRouter = express.Router();
 
+const companyModel = require('../Models/companyModel');
+
 // Dashboard Main Panel
 
 dashboardRouter.get("/", (req, res) => {
-    res.render('dashboard.ejs', {session: req.session});
+    if(req.session.isLoggedIn) {
+      const role = req.session.user.role;
+      const company = companyModel.getCompanyByCompanyID(req.session.user.company);
+      res.render("dashboard", {session: req.session, role:role, companyDict:company});
+    } else {
+      res.sendStatus(401);
+    }
   });
 
 dashboardRouter.get("/main", (req, res) => {
-    res.render("dashboard.ejs", {session: req.session});
+  if(req.session.isLoggedIn) {
+    const role = req.session.user.role;
+    const company = companyModel.getCompanyByCompanyID(req.session.user.company);
+    res.render("dashboard", {session: req.session, role:role, companyDict:company});
+  } else {
+    res.sendStatus(401);
+  }
   });
 
 dashboardRouter.get("/accounts", (req, res) => {
-    res.render("account.ejs", {session: req.session});
+  if(req.session.isLoggedIn) {
+    res.render("account", {session: req.session});
+  } else {
+    res.sendStatus(401);
+  }
   });
 
 dashboardRouter.get("/location", (req, res) => {
-    res.render("locations.ejs", {session: req.session});
+    res.render("locations", {session: req.session});
   });
 
 dashboardRouter.get("/warehouse", (req, res) => {
@@ -34,3 +52,12 @@ dashboardRouter.get("/inventory", (req, res) => {
   });
 
 module.exports = dashboardRouter;
+
+
+// app.get("/order", (req, res) => {
+//   if(req.session.isLoggedIn) {
+//     res.render("order");
+//   } else {
+//     res.sendStatus(401);
+//   }
+// })
