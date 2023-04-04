@@ -45,35 +45,9 @@
                         <h1 class="font-bold pl-2">Overview (Don't edit these cards, they're being used as templates)</h1>
                     </div>
                 </div>
-
-                <% if(session.isLoggedIn === true) { %>
-                    <h1 class="text-4xl text-green-600">You're logged in!</h1>
-                        <% if(session.role === 1) { %>                                                                            
-                            <h2>You're a Location Manager (role=1)</h2>
-                        <% } else if(session.role === 2) { %>                                                                            
-                            <h2>You're a Warehouse Manager (role=2)</h2>
-                        <% } else if(session.role === 3) { %>                                                                            
-                            <h2>You're a Company Owner (role=3)</h2>
-                        <% } else if(session.role === 4) { %>                                                                            
-                            <h2>You're an Administrator (role=4)</h2>
-                        <% } else { %>
-                            <h2>You're an Unassigned User (role=0) </h2>
-                    <% }} %>
                 
-                    <% if(session.isLoggedIn === false) { %>
-                        <h1 class="text-4xl text-red-600">YOU ARE NOT LOGGED IN</h1>
-                        <%- include('partials/accessDenied.ejs') %>
-                    <% } %>
-              
-                    <div class="title">
-                      <h1>Dashboard</h1>
-                      <% if(companyDict.name) { %>
-                          <div class="companyCard">
-                              <h2><%= companyDict.name %></h2>
-                              <h3><%= companyDict.address %></h3>
-                          </div>
-                      <% } %>
-                  </div>
+                    
+<!--
                   <% if (role == 4) { %>
                       <div class="inventoryCard">
                           <h3><a href="/inventory">Inventory</a></h3>
@@ -138,52 +112,66 @@
                           <h2>Contact Your Owner</h2>
                       </div>
                   <% } %>
+-->
 
                 <div class="flex flex-wrap">
                     <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Metric Card-->
+                        <!--Name Card-->
                         <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
                             <div class="flex flex-row items-center">
                                 <div class="flex-shrink pr-4">
-                                    <div class="rounded-full p-5 bg-green-600"><i class="fa fa-wallet fa-2x fa-inverse"></i></div>
+                                    <div class="rounded-full p-5 bg-green-600"><i class="fa-solid fa-user fa-2xl" style="color: #ffffff;"></i></div>
                                 </div>
                                 <div class="flex-1 text-right md:text-center">
-                                    <h2 class="font-bold uppercase text-gray-600">Total Revenue</h2>
-                                   <p class="font-bold text-3xl">$3249 <span class="text-green-500"><i class="fas fa-caret-up"></i></span></p>
+                                    <h2 class="font-bold uppercase text-gray-600">Welcome Back</h2>
+                                   <p class="font-bold text-3xl"> <%= session.user.firstName %> <%= session.user.lastName %> </p>
                                 </div>
                             </div>
                         </div>
-                        <!--/Metric Card-->
+                        <!--/Name Card-->
                     </div>
                     <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Metric Card-->
+                        <!--Role Card-->
                         <div class="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
                             <div class="flex flex-row items-center">
                                 <div class="flex-shrink pr-4">
-                                    <div class="rounded-full p-5 bg-pink-600"><i class="fas fa-users fa-2x fa-inverse"></i></div>
+                                    <div class="rounded-full p-5 bg-pink-600"><i class="fa-solid fa-id-badge fa-2xl" style="color: #ffffff;"></i></div>
                                 </div>
                                 <div class="flex-1 text-right md:text-center">
-                                    <h2 class="font-bold uppercase text-gray-600">Total Users</h2>
-                                    <p class="font-bold text-3xl">249 <span class="text-pink-500"><i class="fas fa-exchange-alt"></i></span></p>
+                                    <h2 class="font-bold uppercase text-gray-600">Your Role</h2>
+
+                                        <% if(session.isLoggedIn === true) { %>
+                                                <% if(session.role === 1) { %>                                                                            
+                                                    <p class="font-bold text-3xl"> Location Manager </p>
+                                                <% } else if(session.role === 2) { %>                                                                            
+                                                    <p class="font-bold text-3xl"> Warehouse Manager </p>
+                                                <% } else if(session.role === 3) { %>                                                                            
+                                                    <p class="font-bold text-3xl"> Company Owner </p>
+                                                <% } else if(session.role === 4) { %>                                                                            
+                                                    <p class="font-bold text-3xl"> Administrator </p>
+                                                <% } else { %>
+                                                    <p class="font-bold text-3xl"> Unassigned User </p>
+                                            <% }} %>
                                 </div>
                             </div>
                         </div>
-                        <!--/Metric Card-->
+                        <!--/Role Card-->
                     </div>
                     <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Metric Card-->
+                        <!--Company Card-->
                         <div class="bg-gradient-to-b from-yellow-200 to-yellow-100 border-b-4 border-yellow-600 rounded-lg shadow-xl p-5">
                             <div class="flex flex-row items-center">
                                 <div class="flex-shrink pr-4">
-                                    <div class="rounded-full p-5 bg-yellow-600"><i class="fas fa-user-plus fa-2x fa-inverse"></i></div>
+                                    <div class="rounded-full p-5 bg-yellow-600"><i class="fa-solid fa-building fa-2xl" style="color: #ffffff;"></i></div>
                                 </div>
                                 <div class="flex-1 text-right md:text-center">
-                                    <h2 class="font-bold uppercase text-gray-600">New Users</h2>
-                                    <p class="font-bold text-3xl">2 <span class="text-yellow-600"><i class="fas fa-caret-up"></i></span></p>
+                                    <h2 class="font-bold uppercase text-gray-600">Your Company</h2>
+                                    <p class="font-bold text-3xl"> <%= companyDict.name %> </p>
+                                    <p class="font-bold text-m"> <%= companyDict.address %> </p>
                                 </div>
                             </div>
                         </div>
-                        <!--/Metric Card-->
+                        <!--/Company Card-->
                     </div>
                     <div class="w-full md:w-1/2 xl:w-1/3 p-6">
                         <!--Metric Card-->
