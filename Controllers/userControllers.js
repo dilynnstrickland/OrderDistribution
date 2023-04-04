@@ -31,6 +31,7 @@ async function createNewEmployee(req, res) {
 }
 
 async function login(req, res) {
+    console.log("Entered login function")
     const {username, password} = req.body;
 
     if (!req.body.username || !req.body.password){
@@ -66,12 +67,14 @@ async function login(req, res) {
             if(user.company){
                 req.session.user.company = user.company;
             } else {
+                console.log("Company Not Assigned")
                 return res.sendStatus(400);
             }
             if(user.location){
                 req.session.user.location = user.location;
             } else {
-                return res.sendStatus(400);
+                console.log("Location not Assigned")
+                //return res.sendStatus(400); // This shouldn't reject the user from entering the entire dashboard (i.e. Owners/Admins)
             }
             req.session.isLoggedIn = true;
             console.log("Login Successful. Redirecting to Dashboard.")
