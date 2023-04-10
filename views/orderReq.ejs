@@ -11,9 +11,9 @@
     </div>
 </head>
 <body>
-    <div class = "AddInvPage">
-        <h2>Add an Item to Inventory</h2><br>
-        <form action="/api/addInv" method="POST" id="InvForm">
+    <div class = "registrationPage">
+        <h2>Make an Order</h2><br>
+        <form action="/api/orderReq" method="POST" id="orderForm">
 
             <label for="item">Item Name:</label>
             <select name="itemID" id="itemID" required>
@@ -25,6 +25,7 @@
             <label for="quantity">Item Quantity:</label>
             <input type="number" id="quantity" name="quantity" required><br><br>
 
+            <input type="hidden" id="locationID" name="locationID" value="<%=clientLocation%>">
             <button type="submit">Submit</button>
         </form>
         <br><br>

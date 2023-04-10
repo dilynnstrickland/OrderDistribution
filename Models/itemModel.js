@@ -5,18 +5,8 @@ const locationModel = require('./locationModel');
 const crypto = require('crypto');
 const argon2 = require('argon2');
 
-async function addItem(itemName, itemBrand, quantity, locationID) {
+async function addInv(itemID, quantity, locationID) {
     try{
-        const itemID = crypto.randomUUID();
-        const sqlItemTable = `INSERT INTO Item(itemID, itemName, itemBrand, quantity) VALUES (@itemID, @itemName, @itemBrand, @quantity)`;
-        const stmtItemTable = db.prepare(sqlItemTable);
-        stmtItemTable.run({
-            "itemID": itemID,
-            "itemName": itemName,
-            "itemBrand": itemBrand,
-            "quantity": quantity
-        });
-
         const invID = crypto.randomUUID();
         const sqlInvTable = `INSERT INTO Inventory(invID, item, location, itemQuantity) VALUES (@invID, @item, @location, @itemQuantity)`;
         const stmtInvTable = db.prepare(sqlInvTable);
@@ -26,11 +16,7 @@ async function addItem(itemName, itemBrand, quantity, locationID) {
             "location": locationID,
             "itemQuantity": quantity
         });
-        const item = getItemByItemID(itemID);
-        const items = getItemByLocationID(locationID);
-        console.log(item);
-        console.log(items)
-        return item;
+        return true;
     } catch(err) {
         console.error(err);
         return false;
@@ -61,7 +47,16 @@ function getItemByLocationID(locationID) {
     }
 }
 
-
+function getAllItem() {
+    const sql = `SELECT * FROM Item`;
+    try {
+        const stmt = db.prepare(sql);
+        const items = stmt.all({});
+        return items;  
+    } catch(err) {
+        console.error(err);
+    }   
+}
 
 function getItemByLocationIDANDItemID(itemID, locationID) {
     try{
@@ -89,22 +84,9 @@ function getAllItemByLocationID(locationID) {
     }
 }
 
-// CREATE TABLE IF NOT EXISTS Item (
-//     itemID TEXT PRIMARY KEY,
-//     itemName TEXT UNIQUE NOT NULL,
-//     itemBrand TEXT NOT NULL,
-//     catagory TEXT, -- Catagory of Item
-//     quantity INTEGER DEFAULT 0
-// );
-
-// invID TEXT PRIMARY KEY,  -- Name of Location
-//   	item TEXT,
-//     location TEXT,
-//     itemQuantity INTEGER DEFAULT 0,  -- How many of the item is there
-//     FOREIGN KEY (location) REFERENCES Inventory(locationID),
-//     FOREIGN KEY (item) REFERENCES Item(itemID)
 module.exports = {
-    addItem,
+    addInv,
+    getAllItem,
     getItemByItemID,
     getItemByLocationID,
     getAllItemByLocationID,

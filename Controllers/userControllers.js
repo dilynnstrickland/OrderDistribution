@@ -78,8 +78,10 @@ async function login(req, res) {
             }
             req.session.isLoggedIn = true;
             console.log("Login Successful. Redirecting to Dashboard.")
-            res.redirect('/dashboard');
-            //return res.sendStatus(200);//OK // This may not actually transmit because of redirect
+            if( 0 <= user.role < 5) {
+                req.session.user.role = user.role;
+            }
+            res.redirect('/dashboard'); // OK
         });
     } else {
         return res.sendStatus(400);//Bad Request
@@ -94,31 +96,9 @@ function logOut(req, res) {
     }
 }
 
-// function editUser(req, res){
-//     const username = req.params['username'];
-//     userModel.editUserByUsername(req, username);
-//     res.sendStatus(200);
-    // try{
-    //     res.sendStatus(200);
-    // } catch(err){
-    //     res.sendStatus(error);
-    // }
-
-// function deleteUser(req, res){
-//     const username = req.params['username'];
-//     try{
-//         userModel.deleteUserbyUsername(username);
-//         res.redirect("/register");
-//     } catch(err){
-//         res.sendStatus(400);
-//     }
-// }
-
 module.exports = {
     createNewEmployee,
     createNewOwner,
     login,
     logOut,
-    // editUser,
-    // deleteUser
 }

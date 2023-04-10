@@ -42,6 +42,7 @@ const userModel = require("./Models/userModel");
 const userValidator = require('./Validators/userValidators');
 const itemController = require('./Controllers/itemController');
 const itemModel = require('./Models/itemModel');
+const locationModel = require('./Models/locationModel');
 
 // Router to dashboard
 const dashboardRouter = require('./Routers/dashboardRouter')
@@ -51,29 +52,26 @@ app.use( express.static( "/public" ) );
 
 // Allow someone to go to host.domain/ instead of host.domain/index
 app.get("/", (req, res) => {
-  res.render("index", {session: req.session});
+  res.render("index");
 });
 
 // Send to index
 app.get("/index", (req, res) => {
-  res.render("index", {session: req.session});
+  res.render("index");
 });
 
 // Also send to index. We're covering our bases here.
 app.get("/home", (req, res) => {
-  res.render("index", {session: req.session});
+  res.render("index");
 });
 
 // Login
 app.get("/login", (req, res) => {
-  res.render("login", {session: req.session});
+  res.render("login");
 });
 
-// Register
-app.get("/register", (req, res) => {
-  const locations = locationController.allLocationsByCompany();
-  console.log(locations);
-  res.render("register", {locations:locations});
+app.get("/registerOwner", (req, res) => {
+  res.render("registerOwner");
 });
 
 //Views Allowed for Owner or Admin Users
@@ -82,7 +80,11 @@ app.get("/registerEmployee", (req, res) => {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
       const locations = locationController.allLocationsByCompany(req);
       const warehouses = locationController.allWarehousesByCompany(req);
-      res.render("registerEmployee", {Locations:locations, Warehouses:warehouses}); 
+      if(locations || warehouses) {
+        res.render("registerEmployee", {Locations:locations, Warehouses:warehouses});
+      } else {
+        res.redirect("/dashboard");
+      }
     }
   } else {
     res.sendStatus(401);
@@ -156,7 +158,12 @@ app.get("/dashboard", (req, res) => {
 app.get("/inventory", (req, res) => {
   if(req.session.isLoggedIn) {
     const items = itemModel.getAllItemByLocationID(req.session.user.location);
-    res.render("inventory", {Items:items});
+    const curLocation = req.session.user.location;
+    const clientLocation = "";
+    console.log(curLocation);
+    const location = locationModel.getLocationByLocationID(curLocation);
+    console.log(location);
+    res.render("inventory", {Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
   } else {
     res.sendStatus(401);
   }
@@ -164,15 +171,37 @@ app.get("/inventory", (req, res) => {
 
 app.get("/order", (req, res) => {
   if(req.session.isLoggedIn) {
-    res.render("order");
+    const warehouses = locationController.allWarehousesByCompany(req);
+      res.render("order", {Warehouses:warehouses});
   } else {
     res.sendStatus(401);
   }
 });
 
+app.get("/inventory/:locationID", (req, res) => {
+  if(req.session.isLoggedIn) {
+    const items = itemModel.getAllItemByLocationID(req.params.locationID);
+    const curLocation = req.session.user.location;
+    const clientLocation = req.params.locaitonID;
+    const location = locationModel.getLocationByLocationID(curLocation);
+    res.render("inventory", {Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
+  } else {
+    res.sendStatus(401);
+  }
+})
+
 app.get("/account", (req, res) => {
   if(req.session.isLoggedIn) {
     res.render("account");
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+app.get("/orderReq/:clientLocation", (req, res) => {
+  if(req.session.isLoggedIn) {
+    const allItems = itemModel.getAllItemByLocationID(clientLocation);
+    res.render("orderReq", {AllItems:allItems, clientLocation:clientLocation});
   } else {
     res.sendStatus(401);
   }
@@ -198,11 +227,6 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
-
-
-// app.get("/company", (req, res) => {
-//   res.render("company");
-// })
 // Allow someone to go to host.domain/ instead of host.domain/index
 app.get("/404", (req, res) => {
   res.render("notfound", {session: req.session});
@@ -212,6 +236,7 @@ app.get("/404", (req, res) => {
 app.get("/404", (req, res) => {
   res.render("notfound", {session: req.session});
 });
+
 app.get("/logout", userController.logOut);
 
 // Login & Register call functions in the userControllers.js file. // This really confused Cameron.
