@@ -43,8 +43,8 @@ const userValidator = require('./Validators/userValidators');
 const itemController = require('./Controllers/itemController');
 const itemModel = require('./Models/itemModel');
 
-// Router to dashboard Controller
-const dashboardRouter = require('./Controllers/dashboardControllers')
+// Router to dashboard
+const dashboardRouter = require('./Routers/dashboardRouter')
 app.use('/dashboard', dashboardRouter);
 
 app.use( express.static( "/public" ) );
