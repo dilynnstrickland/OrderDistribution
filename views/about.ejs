@@ -4,11 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/output.css">
     <title>About</title>
 </head>
+<style>
+    .span {
+        text-align: right;
+    }
+</style>
 <body>
     <%- include('partials/headerNoSession.ejs') %>
-    <div class="mt-20">Hello world</div>
+    <div class="mt-40 mr-40 ml-40 mb-40">
+        <p class="text-center mt-4 sm:text-3xl sm:leading-relaxed">
+            "Distro is designed to be a simple application for small businesses 
+            of any sort that have to deal with multi-location inventory. 
+            We work closely with our users to ensure a smooth and easy 
+            experience so that our services make their days easier, rather than 
+            convolute and complicate their systems with multiple processes. 
+            Distro is an evolving system, and additions are being made regularly 
+            to help improve the user experience, and make running a business 
+            that much easier. Try Distro today!"
+        </p>
+        <span class="mt-10">- Cameron Cobb, CEO</span>
+    </div>
     <%- include('partials/footer.ejs') %>
 </body>
 </html>

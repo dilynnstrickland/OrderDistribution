@@ -582,6 +582,10 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.mb-40 {
+  margin-bottom: 10rem;
+}
+
 .mb-5 {
   margin-bottom: 1.25rem;
 }
@@ -594,8 +598,16 @@ video {
   margin-left: 0.75rem;
 }
 
+.ml-40 {
+  margin-left: 10rem;
+}
+
 .ml-60 {
   margin-left: 15rem;
+}
+
+.mr-40 {
+  margin-right: 10rem;
 }
 
 .mr-60 {
@@ -624,6 +636,10 @@ video {
 
 .mt-4 {
   margin-top: 1rem;
+}
+
+.mt-40 {
+  margin-top: 10rem;
 }
 
 .mt-5 {
@@ -1359,6 +1375,11 @@ video {
 
   .sm\:w-auto {
     width: auto;
+  }
+
+  .sm\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
   }
 
   .sm\:text-5xl {
