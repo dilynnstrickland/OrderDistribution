@@ -11,12 +11,20 @@
         <h1>Order Status</h1>
     </div>
 
-    <div class="addItemField">
-        <h3>Add Item</h3>
-    </div>
-
-    <div class="currentOrderField">
-        <h3>Current Order</h3>
+    <div class="listWarehouse">
+        <% if(!Warehouses) { %>
+            <h2>No Warehouse Found</h2>
+        <% } else { %> 
+            <% for(const i of Warehouses) { %> 
+                <div class="warehouseCard">
+                    <span>Name: </span><%=i.name%><br>
+                    <span>Address: <%=i.address%></span><br>
+                    <form action="/inventory/<%=i.locationID%>" method="GET">
+                        <button type="submit">View Inventory</button>
+                    </form>
+                </div>
+            <% } %>
+        <% } %> 
     </div>
 
 </body>

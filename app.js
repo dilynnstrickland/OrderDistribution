@@ -42,6 +42,7 @@ const userModel = require("./Models/userModel");
 const userValidator = require('./Validators/userValidators');
 const itemController = require('./Controllers/itemController');
 const itemModel = require('./Models/itemModel');
+const locationModel = require('./Models/locationModel');
 
 //Views Allowed for Non-Login Users
 app.get("/login", (req, res) => {
@@ -58,7 +59,11 @@ app.get("/registerEmployee", (req, res) => {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
       const locations = locationController.allLocationsByCompany(req);
       const warehouses = locationController.allWarehousesByCompany(req);
-      res.render("registerEmployee", {Locations:locations, Warehouses:warehouses}); 
+      if(locations || warehouses) {
+        res.render("registerEmployee", {Locations:locations, Warehouses:warehouses}); 
+      } else {
+        res.redirect("/dashboard");
+      }
     }
   } else {
     res.sendStatus(401);
@@ -126,14 +131,31 @@ app.get("/dashboard", (req, res) => {
 app.get("/inventory", (req, res) => {
   if(req.session.isLoggedIn) {
     const items = itemModel.getAllItemByLocationID(req.session.user.location);
-    res.render("inventory", {Items:items});
+    const curLocation = req.session.user.location;
+    const clientLocation = "";
+    console.log(curLocation);
+    const location = locationModel.getLocationByLocationID(curLocation);
+    console.log(location);
+    res.render("inventory", {Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
   } else {
     res.sendStatus(401);
   }
 })
 app.get("/order", (req, res) => {
   if(req.session.isLoggedIn) {
-    res.render("order");
+    const warehouses = locationController.allWarehousesByCompany(req);
+      res.render("order", {Warehouses:warehouses});
+  } else {
+    res.sendStatus(401);
+  }
+})
+app.get("/inventory/:locationID", (req, res) => {
+  if(req.session.isLoggedIn) {
+    const items = itemModel.getAllItemByLocationID(req.params.locationID);
+    const curLocation = req.session.user.location;
+    const clientLocation = req.params.locaitonID;
+    const location = locationModel.getLocationByLocationID(curLocation);
+    res.render("inventory", {Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
   } else {
     res.sendStatus(401);
   }
@@ -145,9 +167,10 @@ app.get("/account", (req, res) => {
     res.sendStatus(401);
   }
 })
-app.get("/addInv", (req, res) => {
+app.get("/orderReq/:clientLocation", (req, res) => {
   if(req.session.isLoggedIn) {
-    res.render("addInv");
+    const allItems = itemModel.getAllItemByLocationID(clientLocation);
+    res.render("orderReq", {AllItems:allItems, clientLocation:clientLocation});
   } else {
     res.sendStatus(401);
   }
@@ -167,6 +190,7 @@ app.post("/api/registerLocation", locationController.createNewLocation);
 app.post("/api/registerWarehouse", locationController.createNewWarehouse);
 app.post("/api/registerEmployee", userValidator.registerEmployeeValidator, userController.createNewEmployee)
 app.post("/api/addInv", itemController.createNewItem);
+
 
 if(isProduction) {
   app.set('trust proxy',1);

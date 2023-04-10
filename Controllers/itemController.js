@@ -2,9 +2,10 @@
 const itemModel = require("../Models/itemModel");
 
 async function createNewItem(req, res) {
-    const {itemName, itemBrand, quantity} = req.body;
+
+    const {itemID, quantity} = req.body;
     const locationID = req.session.user.location;
-    const newItem = await itemModel.addItem(itemName, itemBrand, quantity, locationID);
+    const newItem = await itemModel.addInv(itemID, quantity, locationID);
 
     if(!newItem){
         return res.sendStatus(409);//Conflict
@@ -12,6 +13,11 @@ async function createNewItem(req, res) {
     return res.redirect("/inventory");
 }
 
+function viewInv(req, res) {
+    const {locationID} = req.body;
+    const items = itemModel.getAllItemByLocationID(locationID);
+
+}
 module.exports = {
     createNewItem
 }

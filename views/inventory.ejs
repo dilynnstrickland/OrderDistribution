@@ -30,8 +30,14 @@
             <% } %>
         <% } %> 
     </div>
-    <div class="addInvCard">
-        <h3><a href="/addInv">Add a New Item</a></h3>
-    </div>
+    <% if (curLocation != clientLocation && location.isWarehouse == 1) {%>
+        <div class="addInvCard">
+            <h3><a href="/addInv">Add a New Item</a></h3>
+        </div>
+    <% } else {%>
+        <form action="/orderReq/<%=clientLocation%>" method="GET">
+            <button type="submit">Order</button>
+        </form>
+    <% } %>
 </body>
 </html>

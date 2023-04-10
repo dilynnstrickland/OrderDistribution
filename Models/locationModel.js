@@ -35,7 +35,7 @@ function getWarehousesByCompany(company) {
 }
 
 function getLocationByLocationID(locationID) {
-    const sql = `SELECT * FROM Location WHERE locationID = @locationID`;
+    const sql = `SELECT * FROM Location WHERE locationID=@locationID`;
     try {
         const stmt = db.prepare(sql);
         const location = stmt.get({locationID});

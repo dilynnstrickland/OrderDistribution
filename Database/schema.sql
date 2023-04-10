@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS Location ( -- Refers
     name TEXT NOT NULL,
     address TEXT NOT NULL,
     company TEXT,
-    isWarehouse INTEGER DEFAULT 0,
+    isWarehouse INTEGER DEFAULT 0, --0 is location
     FOREIGN KEY (company) REFERENCES Company(companyID)
 );
 
