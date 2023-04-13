@@ -52,17 +52,17 @@ app.use( express.static( "/public" ) );
 
 // Allow someone to go to host.domain/ instead of host.domain/index
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {session:req.session});
 });
 
 // Send to index
 app.get("/index", (req, res) => {
-  res.render("index");
+  res.render("index", {session:req.session});
 });
 
 // Also send to index. We're covering our bases here.
 app.get("/home", (req, res) => {
-  res.render("index");
+  res.render("index", {session:req.session});
 });
 
 // Login
@@ -74,64 +74,6 @@ app.get("/registerOwner", (req, res) => {
   res.render("registerOwner");
 });
 
-//Views Allowed for Owner or Admin Users
-app.get("/registerEmployee", (req, res) => {
-  if(req.session.isLoggedIn) {
-    if(req.session.user.role == 3 || req.session.user.role == 4) {
-      const locations = locationController.allLocationsByCompany(req);
-      const warehouses = locationController.allWarehousesByCompany(req);
-      if(locations || warehouses) {
-        res.render("registerEmployee", {Locations:locations, Warehouses:warehouses});
-      } else {
-        res.redirect("/dashboard");
-      }
-    }
-  } else {
-    res.sendStatus(401);
-  }
-});
-
-app.get("/registerLocation", (req, res) => {
-  if(req.session.isLoggedIn) {
-    if(req.session.user.role == 3 || req.session.user.role == 4) {
-      res.render("registerLocation"); 
-    }
-  } else {
-    res.sendStatus(401);
-  }
-});
-
-app.get("/registerWarehouse", (req, res) => {
-  if(req.session.isLoggedIn) {
-    if(req.session.user.role == 3 || req.session.user.role == 4) {
-      res.render("registerWarehouse"); 
-    }
-  } else {
-    res.sendStatus(401);
-  }
-});
-
-app.get("/manageLocation", (req, res) => {
-  if(req.session.isLoggedIn) {
-    if(req.session.user.role == 3 || req.session.user.role == 4) {
-      const locations = locationController.allLocationsByCompany(req);
-      res.render("manageLocation", {Locations:locations}); 
-    }
-  } else {
-    res.sendStatus(401);
-  }
-});
-
-app.get("/manageWarehouse", (req, res) => {
-  if(req.session.isLoggedIn) {
-    if(req.session.user.role == 3 || req.session.user.role == 4) {
-      const warehouses = locationController.allWarehousesByCompany(req);
-      res.render("manageWarehouse", {Warehouses:warehouses}); 
-    }
-  } else {
-    res.sendStatus(401);
-  }
-});
 
 app.get("/manageEmployee", (req, res) => {
   if(req.session.isLoggedIn) {
@@ -232,19 +174,11 @@ app.get("/404", (req, res) => {
   res.render("notfound", {session: req.session});
 });
 
-// Allow someone to go to host.domain/ instead of host.domain/index
-app.get("/404", (req, res) => {
-  res.render("notfound", {session: req.session});
-});
-
 app.get("/logout", userController.logOut);
 
 // Login & Register call functions in the userControllers.js file. // This really confused Cameron.
 app.post("/api/login", userValidator.loginValidator, userController.login);
 app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
-app.post("/api/registerLocation", locationController.createNewLocation);
-app.post("/api/registerWarehouse", locationController.createNewWarehouse);
-app.post("/api/registerEmployee", userValidator.registerEmployeeValidator, userController.createNewEmployee)
 app.post("/api/addInv", itemController.createNewItem);
 
 

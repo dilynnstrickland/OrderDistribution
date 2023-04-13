@@ -20,7 +20,7 @@ async function createNewLocation(req, res) {
         return res.sendStatus(409);//Conflict
     }
     
-    return res.redirect("/manageLocation");
+    return res.redirect("/dashboard/locations");
 }
 
 async function createNewWarehouse(req, res) {
@@ -32,7 +32,7 @@ async function createNewWarehouse(req, res) {
         return res.sendStatus(409);//Conflict
     }
     
-    return res.redirect("/manageWarehouse");
+    return res.redirect("/dashboard/warehouse");
 }
 
 module.exports = {

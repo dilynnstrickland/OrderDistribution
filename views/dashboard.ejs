@@ -32,84 +32,172 @@
 <main>
     <% if(session.isLoggedIn === true) {  %>
     <!-- Dasboard -->
-    <div class="flex flex-col md:flex-row">
+    <!-- Dasboard -->
+    <div class="flex flex-col md:flex-row flex-grow">
         <!-- Vertical Nav -->
         <%- include('partials/dash_nav.ejs', {session, page: 'overview'}) %>
         <!-- Actual Dashboard -->
-        <div class="title">
-            <h1>Dashboard</h1>
-            <% if(companyDict.name) { %>
-                <div class="companyCard">
-                    <h2><%= companyDict.name %></h2>
-                    <h3><%= companyDict.address %></h3>
+        <section>
+            <div id="main" class="main-content md:w-full min-h-screen flex flex-col grow bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+
+                <!-- Page Title -->
+                <div class="bg-gray-800 pt-3">
+                    <div class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
+                        <!-- Change this for each page -->
+                        <h1 class="font-bold pl-2">Dashboard Overview</h1>
+                    </div>
                 </div>
-            <% } %>
-        </div>
-        <% if (role == 4) { %>
-            <div class="inventoryCard">
-                <h3><a href="/inventory">Inventory</a></h3>
+
+                <!-- Small Cards -->
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <!--User's Name Card-->
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
+                            <div class="flex flex-row items-center">
+                                <div class="flex-shrink pr-4">
+                                    <div class="rounded-full p-5 bg-green-600"><i class="fa fa-wallet fa-2x fa-inverse"></i></div>
+                                </div>
+                                <div class="flex-1 text-right md:text-center">
+                                    <h2 class="font-bold uppercase text-gray-600">Welcome Back!</h2>
+                                   <p class="font-bold text-3xl"> <%= session.user.firstName %> <%= session.user.lastName %> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/User's Name Card-->
+
+                    <!--Role Card-->
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div class="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
+                            <div class="flex flex-row items-center">
+                                <div class="flex-shrink pr-4">
+                                    <div class="rounded-full p-5 bg-pink-600"><i class="fas fa-users fa-2x fa-inverse"></i></div>
+                                </div>
+                                <div class="flex-1 text-right md:text-center">
+                                    <h2 class="font-bold uppercase text-gray-600">Your Role Is:</h2>                                    
+                                        <% if(session.user.role === 0) { %>
+                                            <p class="font-bold text-3xl"> Unassigned</p>
+                                        <% } else if (session.user.role === 1) {%>
+                                            <p class="font-bold text-3xl"> Location Manager</p>
+                                        <% } else if (session.user.role === 2) {%>
+                                            <p class="font-bold text-3xl"> Warehouse Manager</p>
+                                        <% } else if (session.user.role === 3) {%>
+                                            <p class="font-bold text-3xl"> Company Owner</p>
+                                        <% } else if (session.user.role === 4) {%>
+                                            <p class="font-bold text-3xl"> Administrator </p>
+                                        <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Role Card-->
+
+                    <!--Company Card-->
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div class="bg-gradient-to-b from-yellow-200 to-yellow-100 border-b-4 border-yellow-600 rounded-lg shadow-xl p-5">
+                            <div class="flex flex-row items-center">
+                                <div class="flex-shrink pr-4">
+                                    <div class="rounded-full p-5 bg-yellow-600"><i class="fas fa-user-plus fa-2x fa-inverse"></i></div>
+                                </div>
+                                <div class="flex-1 text-right md:text-center">
+                                    <h2 class="font-bold text-2xl uppercase text-gray-600"> <%= companyDict.name %> </h2>
+                                    <p class="font-bold text-xl"> <%= companyDict.address %> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Company Card-->
+                
+                </div>
+
+                <!-- Do not Touch anything in this DIV PLEASE -Cameron -->
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="">
+                            <div class="">
+                                <h class=""></h>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="chartjs-7" class="chartjs" width="undefined" height="undefined"></canvas>
+                                
+                            </div>
+                        </div>
+                        <!--/ Card-->
+                    </div>
+    
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!-- Card-->
+                        <div class="">
+                            <div class="">
+                                <h2 class=""></h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
+                                
+                            </div>
+                        </div>
+                        <!--/ Card-->
+                    </div>
+    
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!-- Card-->
+                        <div class="">
+                            <div class="">
+                                <h2 class=""></h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
+                               
+                            </div>
+                        </div>
+                        <!--/ Card-->
+                    </div>
+    
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!-- Card-->
+                        <div class="">
+                            <div class="">
+                                <h5 class=""></h5>
+                            </div>
+                            <div class="p-5"><canvas id="chartjs-4" class="chartjs" width="undefined" height="undefined"></canvas>
+                                
+                            </div>
+                        </div>
+                        <!--/ Card-->
+                    </div>
+    
+                        <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                            <!--Table Card-->
+                            <div class="">
+                                <div class="">
+                                    <h2 class=""></h2>
+                                </div>
+                                <div class="p-5">
+                                    
+    
+                                </div>
+                            </div>
+                            <!--/table Card-->
+                        </div>
+    
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Advert Card-->
+                        <div class="">
+                            
+                        </div>
+                        <!--/Advert Card-->
+                    </div>
+    
+    
+                    </div>
             </div>
-            <div class="locationCard">
-                <h3><a href="/location">Location</a></h3>
-            </div>
-            <div class="warehouseCard">
-                <h3><a href="/warehouse">Warehouse</a></h3>
-            </div>
-            <div class="orderCard">
-                <h3><a href="/order">Order</a></h3>
-            </div>
-            <div class="accountCard">
-                <h3><a href="/account">Account</a></h3>
-            </div>
-            <div class="companyRegisterCard">
-                <h3><a href="/company">Register Company</a></h3>
-            </div>
-        <% } %>
-        <% if (role == 3) { %>
-            <div class="locationCard">
-                <h3><a href="/manageLocation">Location</a></h3>
-            </div>
-            <div class="warehouseCard">
-                <h3><a href="/manageWarehouse">Warehouse</a></h3>
-            </div>
-            <div class="orderCard">
-                <h3><a href="/order">Order</a></h3>
-            </div>
-            <div class="employeeCard">
-                <h3><a href="/manageEmployee">Employee</a></h3>
-            </div>
-            <div class="accountCard">
-                <h3><a href="/account">Account</a></h3>
-            </div>
-        <% } %>
-        <% if (role == 2) { %>
-            <div class="inventoryCard">
-                <h3><a href="/inventory">Inventory</a></h3>
-            </div>
-            <div class="orderCard">
-                <h3><a href="/order">Order</a></h3>
-            </div>
-            <div class="accountCard">
-                <h3><a href="/">Account</a></h3>
-            </div>
-        <% } %>
-        <% if (role == 1) { %>
-            <div class="inventoryCard">
-                <h3><a href="/inventory">Inventory</a></h3>
-            </div>
-            <div class="orderCard">
-                <h3><a href="/order">Order</a></h3>
-            </div>
-            <div class="accountCard">
-                <h3><a href="/">Account</a></h3>
-            </div>
-        <% } %>
-        <% if (role == 0) { %>
-            <div class="informMessage">
-                <h2>Contact Your Owner</h2>
-            </div>
-        <% } %>
+        </section>
     </div>
+
+
     <% } else {  %>
         <%- include('partials/accessDenied.ejs') %>
     <% } %>

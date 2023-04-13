@@ -1,36 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Location Registration</title>
-    <link rel="stylesheet" type="text/css" href="css/register.css">
-    <div class="logo">
-        <img src="???"><a href="/dashboard">Home</a>
-    </div>
-</head>
-<body>
-    <div class = "registrationPage">
-        <h2>Location Registration</h2><br>
-        <form action="/api/registerLocation" method="POST" id="registerForm">
-            
-            <label for="name">Name of Location:</label>
-            <input type="text" id="name" name="name" required><br><br>
-        
-            <label for="address">Address:</label>
-            <input type="address" id="address" name="address" required><br><br>
-            <br>
-            <button type="submit">Submit</button>
-        </form>
-        <br><br>
-    </div>
-</body>
-</html>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Distro - Location</title>
 
-<!-- locationID TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    address TEXT NOT NULL,
-    company TEXT,
-    isWarehouse INTEGER DEFAULT 0,
-    inv TEXT, -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/> <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/53802517bf.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
+
+    
+<header>
+    <!--Nav-->
+    <% if(session.isLoggedIn === true) {  %>
+        <%- include('partials/header_dash.ejs', session) %>
+    <% } else { %> 
+        <%- include('partials/header.ejs', session) %>
+    <% } %>
+</header>
+
+
+<main>
+    <% if(session.isLoggedIn === true) {  %>
+    <!-- Dasboard -->
+    <div class="flex flex-col md:flex-row">
+        <!-- Vertical Nav -->
+        <%- include('partials/dash_nav.ejs', {session, page: 'location'}) %>
+        <!-- Actual Dashboard -->
+        <section>
+            <div id="main" class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+
+                <!-- Page Title -->
+                <div class="bg-gray-800 pt-3">
+                    <div class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
+                        <!-- Change this for each page -->
+                        <h1 class="font-bold pl-2">Location</h1>
+                    </div>
+                </div>
+
+                <form action="/dashboard/api/registerLocation" method="POST" id="registerForm">
+            
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
+                            <div class="flex flex-row items-center">
+                                <div class="flex-shrink pr-4">
+                                    <div class="rounded-full p-5 bg-green-600"><i class="fa-solid fa-plus fa-2xl" style="color: #ffffff;"></i></div>
+                                </div>
+                                <div class="flex-1 text-right md:text-center">
+                                    <p class="font-bold text-3xl"> <label for="address"><label for="name">Name of Location:</label></label> </p>
+                                    <h2 class="font-bold uppercase text-gray-600"> <input type="text" id="name" name="name" required> </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br>
+                
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
+                            <div class="flex flex-row items-center">
+                                <div class="flex-shrink pr-4">
+                                    <div class="rounded-full p-5 bg-green-600"><i class="fa-solid fa-plus fa-2xl" style="color: #ffffff;"></i></div>
+                                </div>
+                                <div class="flex-1 text-right md:text-center">
+                                    <p class="font-bold text-3xl"> <label for="address">Address:</label> </p>
+                                    <h2 class="font-bold uppercase text-gray-600"> <input type="address" id="address" name="address" required></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <button type="submit" class="w-auto">
+                        <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                            <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
+                                <div class="flex flex-row items-center">
+                                    <div class="flex-shrink pr-4">
+                                        <div class="rounded-full p-5 bg-green-600"><i class="fa-solid fa-plus fa-2xl" style="color: #ffffff;"></i></div>
+                                    </div>
+                                    <div class="flex-1 text-right md:text-center">
+                                       <p class="font-bold text-3xl"> Create Location! </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+
+
+                
+                    
+
+                <!-- Do not Touch anything in this DIV PLEASE -Cameron -->
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!--Graph Card-->
+                    <div class="">
+                        <div class="">
+                            <h class=""></h>
+                        </div>
+                        <div class="p-5">
+                            <canvas id="chartjs-7" class="chartjs" width="undefined" height="undefined"></canvas>
+                            
+                        </div>
+                    </div>
+                    <!--/ Card-->
+                </div>
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!-- Card-->
+                    <div class="">
+                        <div class="">
+                            <h2 class=""></h2>
+                        </div>
+                        <div class="p-5">
+                            <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
+                            
+                        </div>
+                    </div>
+                    <!--/ Card-->
+                </div>
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!-- Card-->
+                    <div class="">
+                        <div class="">
+                            <h2 class=""></h2>
+                        </div>
+                        <div class="p-5">
+                            <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
+                           
+                        </div>
+                    </div>
+                    <!--/ Card-->
+                </div>
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!-- Card-->
+                    <div class="">
+                        <div class="">
+                            <h5 class=""></h5>
+                        </div>
+                        <div class="p-5"><canvas id="chartjs-4" class="chartjs" width="undefined" height="undefined"></canvas>
+                            
+                        </div>
+                    </div>
+                    <!--/ Card-->
+                </div>
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Table Card-->
+                        <div class="">
+                            <div class="">
+                                <h2 class=""></h2>
+                            </div>
+                            <div class="p-5">
+                                
+
+                            </div>
+                        </div>
+                        <!--/table Card-->
+                    </div>
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!--Advert Card-->
+                    <div class="">
+                        
+                    </div>
+                    <!--/Advert Card-->
+                </div>
+
+
+                </div>
+            </div>
+        </section>
+    </div>
+    <% } else {  %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
+</main>
+
+
+
+
+<script>
+    /*Toggle dropdown list*/
+    function toggleDD(myDropMenu) {
+        document.getElementById(myDropMenu).classList.toggle("invisible");
+    }
+    /*Filter dropdown options*/
+    function filterDD(myDropMenu, myDropMenuSearch) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById(myDropMenuSearch);
+        filter = input.value.toUpperCase();
+        div = document.getElementById(myDropMenu);
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
+            var dropdowns = document.getElementsByClassName("dropdownlist");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (!openDropdown.classList.contains('invisible')) {
+                    openDropdown.classList.add('invisible');
+                }
+            }
+        }
+    }
+</script>
+
+
+</body>
+
+</html>
