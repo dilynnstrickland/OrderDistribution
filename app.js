@@ -74,6 +74,10 @@ app.get("/registerOwner", (req, res) => {
   res.render("registerOwner");
 });
 
+app.get("/registerEmployee", (req, res) => {
+  res.render("registerEmployee");
+});
+
 
 app.get("/manageEmployee", (req, res) => {
   if(req.session.isLoggedIn) {
