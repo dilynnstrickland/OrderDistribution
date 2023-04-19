@@ -179,6 +179,7 @@ app.get("/logout", userController.logOut);
 // Login & Register call functions in the userControllers.js file. // This really confused Cameron.
 app.post("/api/login", userValidator.loginValidator, userController.login);
 app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
+app.post("/api/registerEmployee", userValidator.registerEmployeeValidator, userController.createNewEmployee);
 app.post("/api/addInv", itemController.createNewItem);
 
 

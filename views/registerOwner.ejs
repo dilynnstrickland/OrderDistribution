@@ -7,7 +7,9 @@
     <title>Distro - Register</title>
     <link rel="stylesheet" type="text/css" href="css/register.css">
     <div class="logo">
-        <img src="???"><a href="/dashboard">Home</a>
+        <a href="/home" aria-label="Home">
+            <img class="md:ml-3" src="../../assets/navbarLogo2.png" ></img></span>
+        </a>
     </div>
 </head>
 <body>
@@ -53,3 +55,129 @@
 
 </body>
 </html>
+
+<style>
+    /* ページ全体のスタイル */
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* ページの幅が狭くなった場合のスタイル */
+  @media only screen and (max-width: 767px) {
+    body {
+      font-size: 14px;
+    }
+    .registrationPage {
+      margin: 0 10px;
+    }
+  }
+  
+  /* ヘッダーのスタイル */
+  .logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo img {
+    height: 50px;
+  }
+  
+  .logo a {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  /* フォームのスタイル */
+  .registrationPage {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .registrationPage h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .registrationPage label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .registrationPage input[type="text"],
+  .registrationPage input[type="password"],
+  .registrationPage input[type="email"],
+  .registrationPage input[type="firstName"],
+  .registrationPage input[type="lastName"],
+  .registrationPage input[type="companyName"], 
+  .registrationPage input[type="companyAddr"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: none;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .registrationPage button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007aff;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .registrationPage button[type="submit"]:hover {
+    background-color: #0062cc;
+  }
+  
+  .registrationPage .login {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #999;
+    text-align: center;
+  }
+  
+  .registrationPage .login span {
+    display: inline-block;
+    margin-right: 5px;
+  }
+  
+  .registrationPage .login a {
+    color: #007aff;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .registrationPage .login a:hover
+  
+</style>

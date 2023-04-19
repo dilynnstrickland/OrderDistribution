@@ -27,7 +27,7 @@ async function createNewEmployee(req, res) {
     if(!newEmployee){
         return res.sendStatus(409);//Conflict
     }
-    return res.redirect("/manageEmployee");
+    return res.redirect("/dashboard/accounts");
 }
 
 async function login(req, res) {

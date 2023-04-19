@@ -108,10 +108,20 @@ dashboardRouter.get("/inventory", (req, res) => {
   if(req.session.isLoggedIn) {
     const items = itemModel.getAllItemByLocationID(req.session.user.location);
     const curLocation = req.session.user.location;
-    const clientLocation = "";
-    console.log(curLocation);
+    const clientLocation = req.session.user.location;
     const location = locationModel.getLocationByLocationID(curLocation);
-    console.log(location);
+    res.render("inventory", {session:req.session, Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
+  } else {
+    res.sendStatus(401);
+  }
+})
+
+dashboardRouter.get("/inventory/:locationID", (req, res) => {
+  if(req.session.isLoggedIn) {
+    const items = itemModel.getAllItemByLocationID(req.params.locationID);
+    const curLocation = req.session.user.location;
+    const clientLocation = req.params.locaitonID;
+    const location = locationModel.getLocationByLocationID(curLocation);
     res.render("inventory", {session:req.session, Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
   } else {
     res.sendStatus(401);

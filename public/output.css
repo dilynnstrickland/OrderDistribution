@@ -798,6 +798,10 @@ video {
   border-top-left-radius: 1.5rem;
 }
 
+.border {
+  border-width: 1px;
+}
+
 .border-4 {
   border-width: 4px;
 }
@@ -1299,6 +1303,10 @@ video {
 }
 
 @media (min-width: 768px) {
+  .md\:ml-3 {
+    margin-left: 0.75rem;
+  }
+
   .md\:mt-2 {
     margin-top: 0.5rem;
   }
