@@ -18,7 +18,7 @@
             <label for="item">Item Name:</label>
             <select name="itemID" id="itemID" required>
                 <option value="">--Please Select Item to add to your Inventory--</option>
-                <% for (const i of AllItems) { %>
+                <% for (const i of items) { %>
                 <option value="<%=i.itemID%>"><%=i.itemName%> (<%=i.itemBrand%>)</option>
             <% } %>
             </select><br><br>

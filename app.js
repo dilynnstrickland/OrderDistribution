@@ -144,22 +144,7 @@ app.get("/account", (req, res) => {
   }
 });
 
-app.get("/orderReq/:clientLocation", (req, res) => {
-  if(req.session.isLoggedIn) {
-    const allItems = itemModel.getAllItemByLocationID(clientLocation);
-    res.render("orderReq", {AllItems:allItems, clientLocation:clientLocation});
-  } else {
-    res.sendStatus(401);
-  }
-});
 
-app.get("/addInv", (req, res) => {
-  if(req.session.isLoggedIn) {
-    res.render("addInv");
-  } else {
-    res.sendStatus(401);
-  }
-});
 
 app.get("/about", (req, res) => {
   res.render("about");

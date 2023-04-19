@@ -61,12 +61,12 @@
                         <% } %>
                     <% } %> 
                 </div>
-                <% if (curLocation != clientLocation && location.isWarehouse == 1) {%>
+                <% if (curLocation != clientLocation) {%>
                     <div class="addInvCard">
-                        <h3><a href="/addInv">Add a New Item</a></h3>
+                        <h3><a href="/dashboard/addInv">Add a New Item</a></h3>
                     </div>
                 <% } else {%>
-                    <form action="/orderReq/<%=clientLocation%>" method="GET">
+                    <form action="/dashboard/orderReq/<%=clientLocation%>" method="GET">
                         <button type="submit">Order</button>
                     </form>
                 <% } %>

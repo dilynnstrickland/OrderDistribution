@@ -136,6 +136,24 @@ dashboardRouter.get("/registerEmployee", (req, res) => {
   }
 });
 
+dashboardRouter.get("/order/:clientLocation", (req, res) => {
+  if(req.session.isLoggedIn) {
+    const allItems = itemModel.getAllItemByLocationID(clientLocation);
+    res.render("orderReq", {allItems:allItems, clientLocation:clientLocation});
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+dashboardRouter.get("/addInv", (req, res) => {
+  if(req.session.isLoggedIn) {
+    const allItems = itemModel.getAllItemByLocationID(req.session.user.location);
+    res.render("addInv", {session:req.session, allItems:allItems, clientLocation:req.session.user.location});
+  } else {
+    res.sendStatus(401);
+  }
+});
+
 dashboardRouter.post("/api/registerEmployee", userValidator.registerEmployeeValidator, userController.createNewEmployee)
 
 module.exports = dashboardRouter;
