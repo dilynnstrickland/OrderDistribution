@@ -551,6 +551,10 @@ video {
   visibility: hidden;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .m-36 {
   margin: 9rem;
 }
