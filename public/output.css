@@ -555,14 +555,6 @@ video {
   position: fixed;
 }
 
-.m-36 {
-  margin: 9rem;
-}
-
-.m-96 {
-  margin: 24rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -860,9 +852,9 @@ video {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
-.bg-gray-400 {
+.bg-gray-300 {
   --tw-bg-opacity: 1;
-  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 
 .bg-gray-50 {

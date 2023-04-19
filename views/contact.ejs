@@ -4,9 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/output.css" rel="stylesheet"></link>
     <title>Contact</title>
 </head>
-<body>
+<body class="bg-blue-200">
     <%- include('partials/headerNoSession.ejs') %>
+    <div class="bg-red-400 mr-40 ml-40">
+        <div class="mt-40 mr-40 ml-40 mb-40 rounded">
+            <p class="text-center mt-4 sm:text-3xl sm:leading-relaxed">
+                You may contact us at <br>
+                <span class="font-bold">thisIsAFakeEmailDontContact@gmail.com</span><br>
+                <span class="mt-10 mb-10 font-bold text-2xl">OR</span><br>
+                Give us a call at our totally real phone number <br>
+                <span class="font-bold">(555) 555-5555</span>
+                <header class="text-center mt-4 sm:text-3xl sm:leading-relaxed font-bold">DISCLAIMER:</header>
+                <p class="text-center mt-4 sm:text-3xl sm:leading-relaxed">
+                    All things wrong with the app are definitely not the programmers
+                    fault and are solely based on the user's computer malfunctioning
+                    or the user clicking on the wrong thing. Try turning your computer
+                    off and on again to resolve any programmatic problems.
+                </p>
+            </p>
+
+
+
+        </div>
+    </div>
+    <%- include('partials/footer.ejs') %>
 </body>
 </html>
