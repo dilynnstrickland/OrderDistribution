@@ -9,7 +9,17 @@ async function createNewItem(req, res) {
     if(!newItem){
         return res.sendStatus(409);//Conflict
     }
-    return res.redirect("/inventory");
+    return res.redirect("/dashboard/inventory");
+}
+
+async function createItem(req, res) {
+    const {itemName, itemBrand, catagory, quantity} = req.body;
+    const newItem = await itemModel.createItem(itemName, itemBrand, catagory, quantity);
+
+    if(!newItem){
+        return res.sendStatus(409);//Conflict
+    }
+    return res.redirect("/dashboard/inventory");
 }
 
 function viewInv(req, res) {
@@ -20,5 +30,6 @@ function viewInv(req, res) {
 
 module.exports = {
     createNewItem,
+    createItem,
     viewInv
 }

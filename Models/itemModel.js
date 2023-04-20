@@ -23,6 +23,25 @@ async function addInv(itemID, quantity, locationID) {
     }
 }
 
+async function createItem(itemName, itemBrand, catagory, quantity) {
+    try{
+        const itemID = crypto.randomUUID();
+        const sqlInvTable = `INSERT INTO Item(itemID, itemName, itemBrand, catagory, quantity) VALUES (@itemID, @itemName, @itemBrand, @catagory, @quantity)`;
+        const stmtInvTable = db.prepare(sqlInvTable);
+        stmtInvTable.run({
+            "itemName": itemName,
+            "itemID": itemID,
+            "itemBrand": itemBrand,
+            "catagory": catagory,
+            "quantity": quantity
+        });
+        return true;
+    } catch(err) {
+        console.error(err);
+        return false;
+    }
+}
+
 function getItemByItemID(itemID) {
     try{
         const sqlItem = `SELECT * FROM Item WHERE itemID=@itemID`;
@@ -86,6 +105,7 @@ function getAllItemByLocationID(locationID) {
 
 module.exports = {
     addInv,
+    createItem,
     getAllItem,
     getItemByItemID,
     getItemByLocationID,

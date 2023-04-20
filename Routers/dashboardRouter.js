@@ -154,6 +154,16 @@ dashboardRouter.get("/addInv", (req, res) => {
   }
 });
 
+dashboardRouter.get("/createItem", (req, res) => {
+  if(req.session.isLoggedIn) {
+    res.render("createItem", {session:req.session});
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+dashboardRouter.post("/api/createItem", itemController.createItem);
+
 dashboardRouter.post("/api/registerEmployee", userValidator.registerEmployeeValidator, userController.createNewEmployee)
 
 module.exports = dashboardRouter;

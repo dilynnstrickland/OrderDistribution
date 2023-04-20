@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Registration</title>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+    <div class="logo">
+        <img src="???"><a href="/dashboard">Home</a>
+    </div>
+</head>
+<body>
+    <div class = "AddItem Page">
+        <h2>Create Item</h2><br>
+        <form action="/dashboard/api/createItem" method="POST" id="CreateItemForm">
+            <label for="itemName">Item Name:</label>
+            <input type="text" id="itemName" name="itemName" required><br><br>
+
+            <label for="itemBrand">Item Brand:</label>
+            <input type="text" id="itemBrand" name="itemBrand" required><br><br>
+
+            <label for="catagory">Item Catagory:</label>
+            <input type="text" id="catagory" name="catagory" required><br><br>
+
+            <label for="quantity">Item Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+        <br><br>
+    </div>
+</body>
+</html>
