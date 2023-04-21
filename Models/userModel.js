@@ -91,6 +91,18 @@ function getRoleByUsername(username) {
     }   
 }
 
+function setUsersLocation(userID, locationID) {
+    const sql  = `UPDATE Users SET locationID=@locationID WHERE userID=@userID`;
+    try{
+        const stmt = db.prepare(sql);
+        stmt.run({"locationID":locationID, "userID": userID});
+        return true;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+
 function updateRole(userId, role) {
     const sql = `UPDATE Users SET role=@role WHERE userId=@userId`;
     try {
@@ -124,5 +136,6 @@ module.exports = {
     updateRole,
     updateCompany,
     getRoleByUsername,
-    getEmployeesByCompany
+    getEmployeesByCompany,
+    setUsersLocation,
 };

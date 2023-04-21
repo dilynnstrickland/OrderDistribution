@@ -1,6 +1,7 @@
 "use strict";
 const userModel = require("../Models/userModel");
 const companyModel = require("../Models/companyModel");
+const locationModel = require("../Models/locationModel");
 const argon2 = require('argon2');
 
 async function createNewOwner(req, res) {
@@ -72,16 +73,17 @@ async function login(req, res) {
             }
             if(user.location){
                 req.session.user.location = user.location;
+                req.session.user.locationID = user.locationID;
             } else {
-                console.log("Location not Assigned")
-                //return res.sendStatus(400); // This shouldn't reject the user from entering the entire dashboard (i.e. Owners/Admins)
+                console.log("Location not Assigned, redirecting to RFL");
+                return res.redirect("/registerFirstLocation");
             }
             req.session.isLoggedIn = true;
             console.log("Login Successful. Redirecting to Dashboard.")
             if( 0 <= user.role < 5) {
                 req.session.user.role = user.role;
             }
-            res.redirect('/dashboard'); // OK
+            return res.redirect('/dashboard'); // OK
         });
     } else {
         return res.sendStatus(400);//Bad Request

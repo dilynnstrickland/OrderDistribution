@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distro - Register</title>
+    <link href="../public/output.css" rel="stylesheet"></link>
+</head>
+<body class="bg-blue-200">
+    <%- include('partials/headerNoSession.ejs') %>
+      <main class="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl text-center mt-20">
+        <h1 class="text-4xl font-bold text-black text-center mb-10">Register</h1>
+          <section>
+              <h3 class="font-bold text-2xl">Welcome to Distro</h3>
+              <p class="text-gray-600 pt-2 text-lg font-bold">Register First Location</p>
+          </section>
+  
+          <section class="mt-10">
+              <form class="flex flex-col" action="/api/registerFirstLocation" method="POST" id="registerFirstLocationForm">
+                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="locationName">Main Location Name:</label>
+                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="text" name="locationName" id="locationName">
+                  </div>
+                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="locationAddr">Main Location Address:</label>
+                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="text" name="locationAddr" id="locationAddr">
+                  </div>
+                  <button class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 rounded shodow-lg hover:shadow-xl transition duration-200" type="Submit" value="register">Register First Location</button>
+              </form>
+          </section>
+      </main>
+      <%- include('partials/footer.ejs') %>
+  </body>
+</html>

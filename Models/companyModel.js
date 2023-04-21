@@ -31,8 +31,21 @@ function getCompanyByCompanyID(companyId) {
     }   
 }
 
+async function getCompanyID(companyName) {
+    const sql = `SELECT companyID FROM Company WHERE name="@companyName"`;
+    try {
+        const stmt = db.prepare(sql);
+        const companyID = stmt.get({"name": companyName});
+        return companyID;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+
 
 module.exports = {
     addCompany,
-    getCompanyByCompanyID
+    getCompanyByCompanyID,
+    getCompanyID,
 };

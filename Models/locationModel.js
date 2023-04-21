@@ -38,14 +38,27 @@ function getLocationByLocationID(locationID) {
     const sql = `SELECT * FROM Location WHERE locationID = @locationID`;
     try {
         const stmt = db.prepare(sql);
-        const location = stmt.get({locationID});
+        const location = stmt.get({"locationID": locationID});
         return location;  
     } catch(err) {
         console.error(err);
     }
 }
 
-async function addLocation(name, address, company) {
+async function getLocationIDByName(locationName) {
+    const sql = `SELECT locationID FROM Location WHERE name=@locationName`;
+    try {
+        const stmt = db.prepare(sql);
+        const location = stmt.all({"locationName": locationName});
+        console.log("location=" + location)
+        return location;
+    } catch (err) {
+        console.err(err);
+        return false;
+    }
+}
+
+function addLocation(name, address, company) {
     try{
         const locationID = crypto.randomUUID();
         const sqlLocationTable = `INSERT INTO Location(locationID, name, address, company) VALUES (@locationID, @name, @address, @company)`;
@@ -87,5 +100,6 @@ module.exports = {
     getWarehousesByCompany,
     getLocationByLocationID,
     addLocation,
-    addWarehouse
+    addWarehouse,
+    getLocationIDByName,
 };

@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS Users (
     lastName TEXT NOT NULL,
     company TEXT,
     role INTEGER DEFAULT 0, -- default to "no-role" role
-    location TEXT,
-    FOREIGN KEY (location) REFERENCES Location(locationID),
+    locationID TEXT,
+    FOREIGN KEY (locationID) REFERENCES Location(locationID),
     FOREIGN KEY (company) REFERENCES Company(companyID)
 );
 
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Location ( -- Refers
 
 CREATE TABLE IF NOT EXISTS Item (
     itemID TEXT PRIMARY KEY,
-    itemName TEXT UNIQUE NOT NULL,
+    itemName TEXT NOT NULL,
     itemBrand TEXT NOT NULL,
     catagory TEXT, -- Catagory of Item
     quantity INTEGER DEFAULT 0
@@ -38,9 +38,9 @@ CREATE TABLE IF NOT EXISTS Item (
 CREATE TABLE IF NOT EXISTS Inventory (
     invID TEXT PRIMARY KEY,  -- Name of Location
   	item TEXT,
-    location TEXT,
+    locationID TEXT,
     itemQuantity INTEGER DEFAULT 0,  -- How many of the item is there
-    FOREIGN KEY (location) REFERENCES Location(locationID),
+    FOREIGN KEY (locationID) REFERENCES Location(locationID),
     FOREIGN KEY (item) REFERENCES Item(itemID)
 );
 

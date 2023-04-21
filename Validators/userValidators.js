@@ -82,6 +82,26 @@ const loginSchema = Joi.object({
         .required()
 });
 
+const registerFirstLocationSchema = Joi.object({
+    locationName:Joi.string()
+        .required(),
+    
+    locationAddr:Joi.string()
+        .required()
+});
+
+function registerFirstLocationValidator (req, res, next) {
+    const {value, error} = registerFirstLocationSchema.validate(req.body, validateOpt);
+
+    if (error) {
+        const errorMessages = error.details.map(detail => detail.message);
+        return res.status(400).json({"errors": errorMessages}); // Bad Request
+    }
+
+    req.body = value;
+    next();
+}
+
 function loginValidator(req, res, next) {
     const {value, error} = loginSchema.validate(req.body, validateOpt);
     
@@ -123,5 +143,6 @@ function registerEmployeeValidator(req, res, next) {
 module.exports = {
     registerOwnerValidator,
     registerEmployeeValidator,
-    loginValidator
+    loginValidator,
+    registerFirstLocationValidator
 }

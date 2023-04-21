@@ -14,7 +14,9 @@ async function createNewItem(req, res) {
 
 async function createItem(req, res) {
     const {itemName, itemBrand, catagory, quantity} = req.body;
-    const newItem = await itemModel.createItem(itemName, itemBrand, catagory, quantity);
+    const locationID = req.session.user.locationID;
+    console.log("locationID=" +locationID);
+    const newItem = await itemModel.createItem(itemName, itemBrand, catagory, quantity, locationID);
 
     if(!newItem){
         return res.sendStatus(409);//Conflict

@@ -74,6 +74,10 @@ app.get("/registerOwner", (req, res) => {
   res.render("registerOwner");
 });
 
+app.get("/registerFirstLocation", (req, res) => {
+  res.render("registerFirstLocation");
+});
+
 app.get("/registerEmployee", (req, res) => {
   res.render("registerEmployee");
 });
@@ -168,6 +172,7 @@ app.get("/logout", userController.logOut);
 // Login & Register call functions in the userControllers.js file. // This really confused Cameron.
 app.post("/api/login", userValidator.loginValidator, userController.login);
 app.post("/api/registerOwner", userValidator.registerOwnerValidator, userController.createNewOwner);
+app.post("/api/registerFirstLocation", userValidator.registerFirstLocationValidator, locationController.createFirstLocation);
 app.post("/api/addInv", itemController.createNewItem);
 
 

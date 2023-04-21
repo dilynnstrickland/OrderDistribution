@@ -1,5 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Distro - Inventory</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/> <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
+    <link href="../public/output.css" type="text/html" rel="stylesheet"></link>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/53802517bf.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
+
+        
+    <header>
+        <!--Nav-->
+        <% if(session.isLoggedIn === true) {  %>
+            <%- include('partials/header_dash.ejs', session) %>
+        <% } else { %> 
+            <%- include('partials/header.ejs', session) %>
+        <% } %>
+    </header>
+    <% if(session.isLoggedIn === true) {  %>
+        <div class="flex flex-col md:flex-row">
+            <%- include('partials/dash_nav.ejs', {session, page: 'inventory'}) %>
+            <section>
+                <div id="main" class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+
+                    <!-- Page Title -->
+                    <div class="bg-gray-800 pt-3">
+                        <div class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
+                            <!-- Change this for each page -->
+                            <h1 class="font-bold pl-2">Create Item</h1>
+                        </div>
+                    </div>
+                    <div class="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl text-center mt-10">
+                  
+                          <section class="mt-10">
+                              <form class="flex flex-col" action="/dashboard/api/createItem" method="POST" id="CreateItemForm">
+                                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                                      <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="itemName">Item Name:</label>
+                                      <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="text" name="itemName" id="itemName" required>
+                                  </div>
+                                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="itemBrand">Item Brand:</label>
+                                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="text" name="itemBrand" id="itemBrand" required>
+                                  </div>
+                                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="catagory">Item Catagory:</label>
+                                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="text" name="catagory" id="catagory" required>
+                                  </div>
+                                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="quantity">Item Quantity:</label>
+                                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="number" name="quantity" id="quantity" required>
+                                  </div>
+                                  <button class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 rounded shodow-lg hover:shadow-xl transition duration-200" type="Submit" value="addItem">Add Item</button>
+                              </form>
+                          </section>
+                    </div>
+
+                    <!-- Do not Touch anything in this DIV PLEASE -Cameron -->
+                    <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="">
+                            <div class="">
+                                <h class=""></h>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="chartjs-7" class="chartjs" width="undefined" height="undefined"></canvas>
+                                
+                            </div>
+                        </div>
+                        <!--/ Card-->
+                    </div>
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!-- Card-->
+                        <div class="">
+                            <div class="">
+                                <h2 class=""></h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
+                                
+                            </div>
+                        </div>
+                        <!--/ Card-->
+                    </div>
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!-- Card-->
+                        <div class="">
+                            <div class="">
+                                <h2 class=""></h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
+                            
+                            </div>
+                        </div>
+                        <!--/ Card-->
+                    </div>
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!-- Card-->
+                        <div class="">
+                            <div class="">
+                                <h5 class=""></h5>
+                            </div>
+                            <div class="p-5"><canvas id="chartjs-4" class="chartjs" width="undefined" height="undefined"></canvas>
+                                
+                            </div>
+                        </div>
+                        <!--/ Card-->
+                    </div>
+
+                        <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                            <!--Table Card-->
+                            <div class="">
+                                <div class="">
+                                    <h2 class=""></h2>
+                                </div>
+                                <div class="p-5">
+                                    
+
+                                </div>
+                            </div>
+                            <!--/table Card-->
+                        </div>
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Advert Card-->
+                        <div class="">
+                            
+                        </div>
+                        <!--/Advert Card-->
+                    </div>
+
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    <% } %>
+    </body>
+</html>
+
+<!-- 
+<main>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,4 +189,4 @@
         <br><br>
     </div>
 </body>
-</html>
+</html> -->
