@@ -106,13 +106,14 @@ dashboardRouter.get("/order", (req, res) => {
 
 dashboardRouter.get("/inventory", (req, res) => {
   if(req.session.isLoggedIn) {
-    const items = itemModel.getAllItemByLocationID(req.session.user.location);
+    const items = itemModel.getAllItemByLocationID(req.session.user.locationID);
+    console.log(items);
     const curLocation = req.session.user.location;
     const clientLocation = "";
     console.log(curLocation);
     const location = locationModel.getLocationByLocationID(curLocation);
     console.log(location);
-    res.render("inventory", {session:req.session, Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
+    res.render("inventory", {session:req.session, items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
   } else {
     res.sendStatus(401);
   }
@@ -125,7 +126,7 @@ dashboardRouter.get("/registerEmployee", (req, res) => {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
       const locations = locationController.allLocationsByCompany(req);
       const warehouses = locationController.allWarehousesByCompany(req);
-      if(locations || warehouses) {
+      if(locations && warehouses) {
         res.render("registerEmployee", {session: req.session, Locations:locations, Warehouses:warehouses}); 
       } else {
         res.redirect("/dashboard");

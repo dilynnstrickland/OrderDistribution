@@ -12,29 +12,28 @@ function allWarehousesByCompany(req) {
     return locationModel.getWarehousesByCompany(company);
 }
 
-async function createFirstLocation(req, res) {
+function createFirstLocation(req, res) {
     const {locationName, locationAddr} = req.body;
     console.log(req.body);
     const username = req.session.user.username;
     const company = req.session.user.company;
     const newLocation = locationModel.addLocation(locationName, locationAddr, company);
-    
+    userModel.setUsersLocation(req.session.user.userID, locationName);
+    const user = userModel.getUserByUsername(username);
+    console.log(user);
+    req.session.user.locationID = user.locationID;
+    req.session.user.location = locationName;
+    console.log(req.session.user);
 
     if (!newLocation) {
         res.sendStatus(409); //conflict
     }
-    const user = userModel.getUserByUsername(username);
 
     req.session.isLoggedIn = true;
     console.log("Login Successful. Redirecting to Dashboard.")
     if( 0 <= user.role < 5) {
         req.session.user.role = user.role;
     }
-    const locationID = locationModel.getLocationIDByName(locationName);
-    console.log("locationID=" + locationID);
-    req.session.user.location = locationName;
-    req.session.user.locationID = locationID;
-    userModel.setUsersLocation(user.userID, locationID);
 
     return res.redirect("/dashboard");
 }

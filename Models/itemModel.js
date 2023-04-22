@@ -78,7 +78,7 @@ function getItemByLocationID(locationID) {
     try{
         const sqlItem = `SELECT * FROM Inventory WHERE locationID=@locationID`;
         const stmt = db.prepare(sqlItem);
-        const items = stmt.get({locationID});
+        const items = stmt.get({"locationID": locationID});
         return items;
     } catch (err) {
         console.error(err);

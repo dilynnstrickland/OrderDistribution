@@ -91,11 +91,14 @@ function getRoleByUsername(username) {
     }   
 }
 
-function setUsersLocation(userID, locationID) {
-    const sql  = `UPDATE Users SET locationID=@locationID WHERE userID=@userID`;
+function setUsersLocation(userID, locationName) {
+    let sql = `SELECT locationID FROM Location WHERE name=@locationName`
     try{
-        const stmt = db.prepare(sql);
-        stmt.run({"locationID":locationID, "userID": userID});
+        let stmt = db.prepare(sql);
+        const locationID = stmt.get({"locationName":locationName});
+        sql  = `UPDATE Users SET locationID=@locationID WHERE userID=@userID`;
+        stmt = db.prepare(sql);
+        stmt.run({"locationID": locationID.locationID, "userID": userID});
         return true;
     } catch (err) {
         console.error(err);

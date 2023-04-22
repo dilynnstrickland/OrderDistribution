@@ -105,20 +105,6 @@ app.get("/dashboard", (req, res) => {
   }
 });
 
-app.get("/inventory", (req, res) => {
-  if(req.session.isLoggedIn) {
-    const items = itemModel.getAllItemByLocationID(req.session.user.location);
-    const curLocation = req.session.user.location;
-    const clientLocation = "";
-    console.log(curLocation);
-    const location = locationModel.getLocationByLocationID(curLocation);
-    console.log(location);
-    res.render("inventory", {Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
-  } else {
-    res.sendStatus(401);
-  }
-});
-
 app.get("/order", (req, res) => {
   if(req.session.isLoggedIn) {
     const warehouses = locationController.allWarehousesByCompany(req);

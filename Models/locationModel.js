@@ -49,8 +49,7 @@ async function getLocationIDByName(locationName) {
     const sql = `SELECT locationID FROM Location WHERE name=@locationName`;
     try {
         const stmt = db.prepare(sql);
-        const location = stmt.all({"locationName": locationName});
-        console.log("location=" + location)
+        const locationID = stmt.get({"locationName": locationName});
         return location;
     } catch (err) {
         console.err(err);

@@ -4,6 +4,79 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distro - Register</title>
+    <link href="../public/output.css" rel="stylesheet"></link>
+</head>
+<body class="bg-blue-200">
+    <header>
+        <!--Nav-->
+        <% if(session.isLoggedIn === true) {  %>
+            <%- include('partials/header_dash.ejs', session) %>
+        <% } else { %> 
+            <%- include('partials/header.ejs', session) %>
+        <% } %>
+    </header>
+      <main class="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl text-center mt-20">
+        <h1 class="text-4xl font-bold text-black text-center mb-10">Register</h1>
+          <section>
+              <h3 class="font-bold text-2xl">Welcome to Distro</h3>
+              <p class="text-gray-600 pt-2 text-lg font-bold">Register as Owner</p>
+          </section>
+  
+          <section class="mt-10">
+              <form class="flex flex-col" action="/api/registerEmployee" method="POST" id="registerEmployeeForm">
+                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                      <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="username">Username:</label>
+                      <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="text" name="username" id="username">
+                  </div>
+                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                      <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="password">Password:</label>
+                      <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="password" name="password" id="password">
+                  </div>
+                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="passwordConfirm"> Confirm Password:</label>
+                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="password" name="passwordConfirm" id="passwordConfirm">
+                  </div>
+                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="email">Email:</label>
+                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="email" name="email" id="email">
+                  </div>
+                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="firstName">First Name:</label>
+                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="text" name="firstName" id="firstName">
+                  </div>
+                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="lastName">Last Name:</label>
+                    <input class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" type="text" name="lastName" id="lastName">
+                  </div>
+                  <div class="mb-6 pt-3 rounded bg-gray-200">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="Location">Location:</label>
+                    <select class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" name="location" id="location" required>
+                    <option value="">--Please Select Location (Location Manager)--</option>
+                    <% for (const i of Locations) { %>
+                      <option value="<%=i.locationID%>"><%=i.name%></option>
+                    <% } %>
+                    <option value="">--Please Select Warehouse (Warehouse Manager)--</option>
+                    <% for (const i of Warehouses) { %>
+                        <option value="<%=i.locationID%>"><%=i.name%></option>
+                    <% } %>
+                    </select>
+                  </div>
+                  <button class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 rounded shodow-lg hover:shadow-xl transition duration-200" type="Submit" value="register">Register</button>
+              </form>
+          </section>
+      </main>
+      <%- include('partials/footer.ejs') %>
+  </body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Registration</title>
     <link rel="stylesheet" type="text/css" href="css/register.css">
     <div class="logo">
@@ -33,18 +106,7 @@
             <label for="lastName">Last Name:</label>
             <input type="lastName" id="lastName" name="lastName" required><br><br>
 
-            <label for="locaiton">Location:</label>
-            <select name="location" id="location" required>
-                <option value="">--Please Select Location (Location Manager)--</option>
-                <% for (const i of Locations) { %>
-                <option value="<%=i.locationID%>"><%=i.name%></option>
-            <% } %>
-                <option value="">--Please Select Warehouse (Warehouse Manager)--</option>
-                <% for (const i of Warehouses) { %>
-                    <option value="<%=i.locationID%>"><%=i.name%></option>
-                <% } %>
-
-            </select>
+            
 
             <br><br>
             <button type="submit">Submit</button>
@@ -52,4 +114,4 @@
         <br><br>
     </div>
 </body>
-</html>
+</html> -->
