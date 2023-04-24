@@ -119,6 +119,24 @@ dashboardRouter.get("/inventory", (req, res) => {
   }
 })
 
+dashboardRouter.get("/inventory/:locationID", (req, res) => {
+  console.log("Test")
+  if(req.session.isLoggedIn) {
+    const items = itemModel.getAllItemByLocationID(req.params.locationID);
+    console.log(items);
+    const curLocation = req.session.user.location;
+    console.log(curLocation);
+    const clientLocation = req.params.locaitonID;
+    console.log(clientLocation);
+    const location = locationModel.getLocationByLocationID(curLocation);
+    console.log(location);
+
+    res.render("inventory", { session:req.session, Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
+  } else {
+    res.sendStatus(401);
+  }
+})
+
 // Account Management Routers
 dashboardRouter.get("/registerEmployee", (req, res) => {
   console.log("Getting Employee Register");

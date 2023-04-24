@@ -114,17 +114,7 @@ app.get("/order", (req, res) => {
   }
 });
 
-app.get("/inventory/:locationID", (req, res) => {
-  if(req.session.isLoggedIn) {
-    const items = itemModel.getAllItemByLocationID(req.params.locationID);
-    const curLocation = req.session.user.location;
-    const clientLocation = req.params.locaitonID;
-    const location = locationModel.getLocationByLocationID(curLocation);
-    res.render("inventory", {Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
-  } else {
-    res.sendStatus(401);
-  }
-})
+
 
 app.get("/account", (req, res) => {
   if(req.session.isLoggedIn) {
