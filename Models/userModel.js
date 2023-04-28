@@ -29,16 +29,16 @@ async function addOwner(username, password, email, firstName, lastName, newCompa
     }
 }
 
-async function addEmployee(username, password, email, firstName, lastName, location, company) {
+async function addEmployee(username, password, email, firstName, lastName, locationID, company) {
     try{
         const userID = crypto.randomUUID();
         const hash = await argon2.hash(password);
-        const locationObj = locationModel.getLocationByLocationID(location);
+        const locationObj = locationModel.getLocationByLocationID(locationID);
         let role = 1;
         if(locationObj.isWarehouse) {
             role = 2;
         }
-        const sqlUsersTable = `INSERT INTO Users(userID, username, passwordHash, email, firstName, lastName, company, role, location) VALUES (@userID, @username, @passwordHash, @email, @firstName, @lastName, @company, @role, @location)`;
+        const sqlUsersTable = `INSERT INTO Users(userID, username, passwordHash, email, firstName, lastName, company, role, locationID) VALUES (@userID, @username, @passwordHash, @email, @firstName, @lastName, @company, @role, @locationID)`;
         const stmtUsersTable = db.prepare(sqlUsersTable);
         stmtUsersTable.run({
             "userID":userID,
@@ -49,7 +49,7 @@ async function addEmployee(username, password, email, firstName, lastName, locat
             "lastName":lastName,
             "company":company,
             "role":role,
-            "location":location
+            "locationID":locationID
         });
         return true;
     } catch(err) {
