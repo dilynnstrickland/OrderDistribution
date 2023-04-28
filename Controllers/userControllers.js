@@ -71,8 +71,8 @@ async function login(req, res) {
                 console.log("Company Not Assigned")
                 return res.sendStatus(400);
             }
-            if(user.location){
-                req.session.user.location = user.location;
+            if(user.locationID){
+                //req.session.user.location = user.location;
                 req.session.user.locationID = user.locationID;
             } else {
                 console.log("Location not Assigned, redirecting to RFL");

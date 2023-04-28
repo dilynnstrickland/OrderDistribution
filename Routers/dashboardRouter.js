@@ -131,7 +131,7 @@ dashboardRouter.get("/inventory/:locationID", (req, res) => {
     const location = locationModel.getLocationByLocationID(curLocation);
     console.log(location);
 
-    res.render("inventory", { session:req.session, Items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
+    res.render("inventory", { session:req.session, items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
   } else {
     res.sendStatus(401);
   }
