@@ -7,6 +7,11 @@ function allLocationsByCompany(req) {
     return locationModel.getLocationsByCompany(company);
 } 
 
+function getLocationByLocationID(req) {
+    const location = req.session.user.locationID;
+    return locationModel.getLocationByLocationID(location);
+}
+
 function allWarehousesByCompany(req) {
     const company = req.session.user.company;
     return locationModel.getWarehousesByCompany(company);
@@ -63,6 +68,7 @@ async function createNewWarehouse(req, res) {
 }
 
 module.exports = {
+    getLocationByLocationID,
     allLocationsByCompany,
     allWarehousesByCompany,
     createNewLocation,

@@ -37,19 +37,22 @@ async function login(req, res) {
 
     if (!req.body.username || !req.body.password){
         console.log("User has not entered username or password");
-        return res.sendStatus(400);
+        res.sendStatus(400);
+        res.redirect("/login")
     }
 
     if (!userModel.getUserByUsername(username)){ // if user non-existent
         console.log("User does not exist.");
-        return res.sendStatus(400);
+        res.sendStatus(400);
+        res.redirect("/login")
     }
     
     const user = userModel.getUserByUsername(username);
 
     if(!user) {
         console.log("User does not exist");
-        return res.sendStatus(400);
+        res.sendStatus(400);
+        res.redirect("/login")
     } 
     console.log("User exists.");
     const {passwordHash} = user;

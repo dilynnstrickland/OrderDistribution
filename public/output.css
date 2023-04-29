@@ -802,6 +802,10 @@ video {
   border-top-left-radius: 1.5rem;
 }
 
+.border {
+  border-width: 1px;
+}
+
 .border-4 {
   border-width: 4px;
 }

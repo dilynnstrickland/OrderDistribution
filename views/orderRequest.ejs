@@ -5,13 +5,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Distro - Order</title>
+    <title>Distro - Location</title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/> <!--Replace with your tailwind.css once created-->
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/53802517bf.js" crossorigin="anonymous"></script>
+    <style>
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 30px;
+		}
+        .item-label {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+    	}
+
+        .item-brand {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+
+		.item {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			width: 300px;
+			height: 80px;
+			padding: 10px;
+			margin-bottom: 10px;
+			border: 2px solid #ccc;
+			border-radius: 5px;
+		}
+
+		.item-label {
+			flex: 2;
+		}
+
+		.item-brand {
+			flex: 1;
+		}
+
+		.item-quantity {
+			flex: 0.5;
+			text-align: center;
+		}
+
+		.submit-btn {
+			margin-top: 20px;
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.2s ease;
+		}
+
+		.submit-btn:hover {
+			background-color: #0062cc;
+		}
+	</style>
 </head>
 
 <body class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
@@ -41,47 +105,52 @@
                 <div class="bg-gray-800 pt-3">
                     <div class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
                         <!-- Change this for each page -->
-                        <h1 class="font-bold pl-2">Location</h1>
+                        <h1 class="font-bold pl-2">Order Form</h1>
                     </div>
                 </div>
 
-          <!--      <a href="/dashboard/orderReq">-->
-                <form class="flex flex-col" action="/dashboard/orderRequest" method="POST">
-                    <div class="mb-6 pt-3 rounded bg-gray-200">
-                        <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="Location">Select Location to send order:</label>
-                        <select class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" name="location" id="location" required>
-                            <option value="">--Please Select Location (Location Manager)--</option>
-                            <% for (const i of Locations) { %>
-                                <option value="<%=i.locationID%>"><%=i.name%></option>
-                            <% } %>
-                        </select>
-                        <label class="block text-gray-700 text-sm font-bold mb-2 ml-3 text-left" for="Warehouse">Select Warehouse to order from:</label>
-                        <select class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-red-500 transition duration-500 px-3 py-3" name="warehouse" id="warehouse" required>
-                            <option value="">--Please Select Warehouse (Warehouse Manager)--</option>
-                            <% for (const i of Warehouses) { %>
-                                <option value="<%=i.locationID%>"><%=i.name%></option>
-                            <% } %>
-                        </select>
-                    </div>
-                    <button type="submit">
-                        <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                            <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
-                                <div class="flex flex-row items-center">
-                                    <div class="flex-shrink pr-4">
-                                        <div class="rounded-full p-5 bg-green-600"><i class="fa-solid fa-plus fa-2xl" style="color: #ffffff;"></i></div>
-                                    </div>
-                                    <div class="flex-1 text-right md:text-center">
-                                    <p class="font-bold text-3xl"> Create an Order </p>
-                                    <h2 class="font-bold uppercase text-gray-600">Click Here!</h2>
-                                    </div>
+                <!-- PUT ALL CONTENT UNDER THIS COMMENT-->
+                <% if(items.length == 0 || !items) { %>
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
+                            <div class="flex flex-row items-center">
+                                <div class="flex-shrink pr-4">
+                                    <div class="rounded-full p-5 bg-green-600"><i class="fa-solid fa-exclamation fa-2xl" style="color: #ffffff;"></i></i></div>
+                                </div>
+                                <div class="flex-1 text-right md:text-center">
+                                   <p class="font-bold text-3xl"> No Items Found!</p>
                                 </div>
                             </div>
                         </div>
-                    </button>
-                </form>
-             <!--   </a>-->
+                    </div>
+                <% } else { %>
+                    <div class="container">
+                        <form action="/dashboard/api/orderRequest" method="POST">
+                            <input type="hidden" name="location" value=<%= JSON.stringify(location.locationID) %>>
+                            <input type="hidden" name="warehouse" value=<%= JSON.stringify(warehouse.locationID) %>>
+                            <div class="h-96 overflow-auto">
+                            <% for(const i of items) { %>
+                                <div class="item">
+                                    <div class="item-label">
+                                        <div><%= i.itemName %></div>
+                                        <div class="item-brand"><%= i.itemBrand %></div>
+                                        <div class="item-brand"><%= i.itemQuantity %></div>
+                                    </div>
+                                    
+                                <input class="item-quantity" type="number" name="<%= i.itemName %>" value="0" min="0" max="<%=i.itemQuantity%>">
+                            </div>
+                            <% } %>
+                            </div>
+                            <button class="submit-btn" type="submit">Submit Order</button>
+                        </form>
+                    </div>
+                <% } %>
 
-                <!-- Do not Touch anything in this DIV PLEASE -Cameron -->
+                <!-- PUT ALL CONTENT ABOVE THIS COMMENT-->
+
+                <!-- Do not Touch anything in this DIV PLEASE -->
+                <!-- This keeps the page width fixed, at the expense of a little extra page length-->
+                <!-- I know it's bad. - Cameron-->
                 <div class="flex flex-row flex-wrap flex-grow mt-2">
 
                 <div class="w-full md:w-1/2 xl:w-1/3 p-6">

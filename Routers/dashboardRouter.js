@@ -13,6 +13,7 @@ const itemModel = require('../Models/itemModel');
 const locationModel = require('../Models/locationModel');
 
 const userValidator = require('../Validators/userValidators');
+const session = require("express-session");
 
 // Dashboard Main Panel
 
@@ -97,11 +98,51 @@ dashboardRouter.post("/api/registerWarehouse", locationController.createNewWareh
 
 dashboardRouter.get("/order", (req, res) => {
   if(req.session.isLoggedIn) {
+    let locations;
     const warehouses = locationController.allWarehousesByCompany(req);
-      res.render("order", {session:req.session, Warehouses:warehouses});
+    if (req.session.user.role == 3){
+      locations = locationController.allLocationsByCompany(req);
+    }
+    else {
+      locations = [locationController.getLocationByLocationID(req)];
+    }
+    res.render("order", {session:req.session, Warehouses:warehouses, Locations:locations});
   } else {
     res.sendStatus(401);
   }
+})
+
+// Included so if people selected the url and then
+// press enter, then since it doesn't have warehouse
+// or location ids after, it will return to order page
+// to re-enter them.
+dashboardRouter.get("/orderRequest", (req,res) => {
+  res.redirect("order");
+})
+
+dashboardRouter.post("/orderRequest", (req, res) => {
+  let items;
+  if (req.session.isLoggedIn) {
+    if (req.body.location && req.body.warehouse){
+      let {location, warehouse} = req.body;
+      items = itemModel.getAllItemByLocationID(warehouse);
+      location = locationModel.getLocationByLocationID(location);
+      warehouse = locationModel.getLocationByLocationID(warehouse);
+      res.render("orderRequest", {session:req.session, location:location, warehouse:warehouse, items:items});
+    }
+  } else {
+    return res.sendStatus(401);
+  }
+})
+dashboardRouter.post("/api/orderRequest", (req, res) => {
+  const location = JSON.parse(req.body.location);
+  const warehouse = JSON.parse(req.body.warehouse);
+  let items = Object.assign({}, req.body);
+  const filteredObj = Object.fromEntries(Object.entries(items).filter(([key, value]) => value !== '0' && key !== 'location' && key !== 'warehouse'));
+  console.log(location);
+  console.log(warehouse);
+  console.log(filteredObj);
+  
 })
 
 dashboardRouter.get("/inventory", (req, res) => {

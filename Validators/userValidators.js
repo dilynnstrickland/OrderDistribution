@@ -107,6 +107,7 @@ function loginValidator(req, res, next) {
     
     if(error) {
         const errorMessages = error.details.map(detail => detail.message);
+        res.redirect("/login")
         return res.status(400).json({"errors":errorMessages});//Bad Request
     }
 
