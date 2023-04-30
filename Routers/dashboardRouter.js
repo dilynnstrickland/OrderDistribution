@@ -11,9 +11,11 @@ const userModel = require('../Models/userModel');
 const companyModel = require('../Models/companyModel');
 const itemModel = require('../Models/itemModel');
 const locationModel = require('../Models/locationModel');
+const orderModel = require('../Models/orderModel');
 
 const userValidator = require('../Validators/userValidators');
 const session = require("express-session");
+const { createOrder } = require("../Models/orderModel");
 
 // Dashboard Main Panel
 
@@ -100,15 +102,38 @@ dashboardRouter.get("/order", (req, res) => {
   if(req.session.isLoggedIn) {
     let locations;
     const warehouses = locationController.allWarehousesByCompany(req);
+    const orders = orderModel.allOrdersByLocationID(req.session.user.locationID);
+    console.log(orders);
     if (req.session.user.role == 3){
       locations = locationController.allLocationsByCompany(req);
     }
     else {
       locations = [locationController.getLocationByLocationID(req)];
     }
-    res.render("order", {session:req.session, Warehouses:warehouses, Locations:locations});
+    res.render("order", {session:req.session, Warehouses:warehouses, Locations:locations, Orders:orders});
   } else {
     res.sendStatus(401);
+  }
+})
+dashboardRouter.post("/api/order", (req, res) => {
+  //const itemName = JSON.parse(req.body.itemName);
+  if(req.session.isLoggedIn) {
+    const item = JSON.parse(req.body.item);
+    const locationID = JSON.parse(req.body.locationID);
+    const quantity = JSON.parse(req.body.quantity);
+    const orderID = JSON.parse(req.body.orderID);
+    orderModel.addItemToLocationFromOrder(item, locationID, quantity, orderID);
+    res.redirect("/dashboard/order");
+  } else {
+    res.sendStatus(401);
+  }
+  // add the posted 
+})
+dashboardRouter.get("/api/order", (req, res) => {
+  if(req.session.isLoggedIn) {
+    res.redirect("/dashboard/order")
+  } else {
+    res.sendstatus(401);
   }
 })
 
@@ -125,7 +150,7 @@ dashboardRouter.post("/orderRequest", (req, res) => {
   if (req.session.isLoggedIn) {
     if (req.body.location && req.body.warehouse){
       let {location, warehouse} = req.body;
-      items = itemModel.getAllItemByLocationID(warehouse);
+      items = itemModel.getAllItemByLocationID2(warehouse);
       location = locationModel.getLocationByLocationID(location);
       warehouse = locationModel.getLocationByLocationID(warehouse);
       res.render("orderRequest", {session:req.session, location:location, warehouse:warehouse, items:items});
@@ -141,8 +166,9 @@ dashboardRouter.post("/api/orderRequest", (req, res) => {
   const filteredObj = Object.fromEntries(Object.entries(items).filter(([key, value]) => value !== '0' && key !== 'location' && key !== 'warehouse'));
   console.log(location);
   console.log(warehouse);
-  console.log(filteredObj);
-  
+  orderModel.createOrder(filteredObj, location, warehouse);
+
+  res.redirect("/dashboard/order");
 })
 
 dashboardRouter.get("/inventory", (req, res) => {

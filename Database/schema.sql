@@ -44,16 +44,21 @@ CREATE TABLE IF NOT EXISTS Inventory (
     FOREIGN KEY (item) REFERENCES Item(itemID)
 );
 
-CREATE TABLE IF NOT EXISTS Orders (
+/*CREATE TABLE IF NOT EXISTS Orders ( -- wont be using this 
     orderID TEXT PRIMARY KEY,
     dateOrdered DATE NOT NULL,
     list TEXT,
-    FOREIGN KEY (list) REFERENCES OrderLists(listID)
-);
+    FOREIGN KEY (list) REFERENCES OrderLists(OrderID)
+);*/
 
+-- we are using this for orders
 CREATE TABLE IF NOT EXISTS OrderLists (
-    listID TEXT PRIMARY KEY,
+    orderID TEXT,
+    locationID TEXT,
+    dateOrdered DATE NOT NULL,
     item TEXT,
+    itemName TEXT,
     quantity INTEGER DEFAULT 0,
+    FOREIGN KEY (locationID) REFERENCES Location(locationID),
     FOREIGN KEY (item) REFERENCES Item(itemID)
 );

@@ -122,6 +122,17 @@ function getAllItemByLocationID(locationID) {
         return false;
     }
 }
+function getAllItemByLocationID2(locationID) {
+    try{
+        const sqlItem = `SELECT itemID, itemName, itemBrand, itemQuantity FROM Item, Inventory WHERE itemID=item and locationID=@locationID`;
+        const stmt = db.prepare(sqlItem);
+        const items = stmt.all({"locationID":locationID});
+        return items;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
 
 function updateQuantity(itemName, quantity) {
     try {
@@ -147,5 +158,6 @@ module.exports = {
     getItemByItemID,
     getItemByLocationID,
     getAllItemByLocationID,
+    getAllItemByLocationID2,
     getItemByLocationIDANDItemID
 };
