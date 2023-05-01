@@ -25,7 +25,7 @@ dashboardRouter.get("/", (req, res) => {
       const company = companyModel.getCompanyByCompanyID(req.session.user.company);
       res.render("dashboard", {session: req.session, role:role, companyDict:company});
     } else {
-      res.sendStatus(401);
+      res.redirect("/");
     }
   });
 
@@ -35,16 +35,20 @@ dashboardRouter.get("/main", (req, res) => {
     const company = companyModel.getCompanyByCompanyID(req.session.user.company);
     res.render("dashboard", {session: req.session, role:role, companyDict:company});
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
   });
 
 dashboardRouter.get("/accounts", (req, res) => {
   if(req.session.isLoggedIn) {
-    const employees = userModel.getEmployeesByCompany(req.session.user.company);
-    res.render("account", {session: req.session, Employees:employees});
+    if(req.session.user.role == 3 || req.session.user.role == 4) {
+      const employees = userModel.getEmployeesByCompany(req.session.user.company);
+      res.render("account", {session: req.session, Employees:employees});
+    } else {
+      res.redirect("/dashboard")
+    }
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
   });
 
@@ -53,9 +57,11 @@ dashboardRouter.get("/locations", (req, res) => {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
       const locations = locationController.allLocationsByCompany(req);
       res.render("locations", {session:req.session, Locations:locations}); 
+    }  else {
+      res.redirect("/dashboard")
     }
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 });
 
@@ -64,9 +70,11 @@ dashboardRouter.get("/warehouse", (req, res) => {
     if(req.session.user.role == 3 || req.session.user.role == 4) {
       const warehouses = locationController.allWarehousesByCompany(req);
       res.render("warehouse", {session:req.session, Warehouses:warehouses}); 
+    } else {
+      res.redirect("/dashboard")
     }
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 });
 
@@ -80,7 +88,7 @@ dashboardRouter.get("/registerLocation", (req, res) => {
       res.render("registerLocation", {session:req.session, Locations:locations}); 
     }
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 });
 
@@ -91,7 +99,7 @@ dashboardRouter.get("/registerWarehouse", (req, res) => {
       res.render("registerWarehouse", {session:req.session, Warehouses:warehouses}); 
     }
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 });
 
@@ -112,7 +120,7 @@ dashboardRouter.get("/order", (req, res) => {
     }
     res.render("order", {session:req.session, Warehouses:warehouses, Locations:locations, Orders:orders});
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 })
 dashboardRouter.post("/api/order", (req, res) => {
@@ -125,7 +133,7 @@ dashboardRouter.post("/api/order", (req, res) => {
     orderModel.addItemToLocationFromOrder(item, locationID, quantity, orderID);
     res.redirect("/dashboard/order");
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
   // add the posted 
 })
@@ -133,7 +141,7 @@ dashboardRouter.get("/api/order", (req, res) => {
   if(req.session.isLoggedIn) {
     res.redirect("/dashboard/order")
   } else {
-    res.sendstatus(401);
+    res.redirect("/");
   }
 })
 
@@ -156,7 +164,7 @@ dashboardRouter.post("/orderRequest", (req, res) => {
       res.render("orderRequest", {session:req.session, location:location, warehouse:warehouse, items:items});
     }
   } else {
-    return res.sendStatus(401);
+    return res.redirect("/");
   }
 })
 dashboardRouter.post("/api/orderRequest", (req, res) => {
@@ -182,7 +190,7 @@ dashboardRouter.get("/inventory", (req, res) => {
     console.log(location);
     res.render("inventory", {session:req.session, items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 })
 
@@ -200,7 +208,7 @@ dashboardRouter.get("/inventory/:locationID", (req, res) => {
 
     res.render("inventory", { session:req.session, items:items, curLocation:curLocation, clientLocation:clientLocation, location:location});
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 })
 
@@ -218,7 +226,7 @@ dashboardRouter.get("/registerEmployee", (req, res) => {
       }
     }
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 });
 
@@ -227,7 +235,7 @@ dashboardRouter.get("/order/:clientLocation", (req, res) => {
     const allItems = itemModel.getAllItemByLocationID(clientLocation);
     res.render("orderReq", {allItems:allItems, clientLocation:clientLocation});
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 });
 
@@ -236,7 +244,7 @@ dashboardRouter.get("/addInv", (req, res) => {
     const allItems = itemModel.getAllItemByLocationID(req.session.user.location);
     res.render("addInv", {session:req.session, allItems:allItems, clientLocation:req.session.user.location});
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 });
 
@@ -244,7 +252,7 @@ dashboardRouter.get("/createItem", (req, res) => {
   if(req.session.isLoggedIn) {
     res.render("createItem", {session:req.session});
   } else {
-    res.sendStatus(401);
+    res.redirect("/");
   }
 });
 
